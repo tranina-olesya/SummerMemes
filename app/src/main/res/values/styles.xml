@@ -13,4 +13,20 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!-- TextFieldBoxes Styles -->
+    <style name="text_field_boxes">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- Button -->
+    <style name="button" parent="Widget.AppCompat.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="android:background">@color/active</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
 </resources>
