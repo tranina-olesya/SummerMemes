@@ -35,7 +35,7 @@
         <studio.carbonylgroup.textfieldboxes.ExtendedEditText
             android:id="@+id/password_edit_text"
             style="@style/extended_edit_text"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
 
     </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
@@ -44,12 +44,25 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/login_button"
-        style="@style/button"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/login_button" />
+        android:layout_marginBottom="24dp">
+
+        <Button
+            android:id="@+id/login_button"
+            style="@style/button"
+            android:text="@string/login_button" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:translationZ="2dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/black" />
+    </FrameLayout>
 
 </LinearLayout>

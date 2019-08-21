@@ -10,7 +10,7 @@ import ru.vsu.summermemes.ui.authorization.AuthorizationActivity
 class SplashActivity : AppCompatActivity() {
 
     companion object {
-        val SPLASH_TIME_OUT = 300L
+        const val SPLASH_TIME_OUT = 300L
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
