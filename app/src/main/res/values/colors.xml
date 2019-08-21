@@ -2,8 +2,15 @@
 <resources>
     <color name="colorPrimary">@color/background_2</color>
     <color name="colorPrimaryDark">@color/background</color>
-    <color name="colorAccent">#FF575D</color>
+    <color name="colorAccent">@color/active</color>
+    <color name="error">#FF575D</color>
     <color name="active">#1EF0D7</color>
+    <color name="dark_active">#23A391</color>
     <color name="background">#23213F</color>
     <color name="background_2">#312F51</color>
+    <color name="text_boxes_color">#8AFFFFFF</color>
+    <color name="text_boxes_background">#0DFFFFFF</color>
+    <color name="button_text">#23213F</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>
