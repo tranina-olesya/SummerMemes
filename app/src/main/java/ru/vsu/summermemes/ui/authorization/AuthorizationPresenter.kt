@@ -5,13 +5,17 @@ import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import ru.vsu.summermemes.SummerMemesApp
 import ru.vsu.summermemes.api.NetworkService
+import ru.vsu.summermemes.data.sharedprefs.SharedPreferencesProvider
 import ru.vsu.summermemes.models.LoginRequestEntity
 
 @InjectViewState
 class AuthorizationPresenter : MvpPresenter<AuthorizationView>() {
 
     private val memesAPI = NetworkService.create()
+
+    private val sharedPreferencesProvider = SharedPreferencesProvider(SummerMemesApp.provideContext())
 
     private var subscription: Disposable? = null
 
@@ -38,17 +42,18 @@ class AuthorizationPresenter : MvpPresenter<AuthorizationView>() {
     private fun loginUser(loginRequestEntity: LoginRequestEntity) {
         viewState.showLoading()
         subscription = memesAPI
-            .login(loginRequestEntity)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .doOnTerminate { viewState.hideLoading() }
-            .subscribe(
-                { loginResponse ->
-                    print(loginResponse)
-                },
-                {
-                    //error
-                }
-            )
+                .login(loginRequestEntity)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .doOnTerminate { viewState.hideLoading() }
+                .subscribe(
+                        { loginResponse ->
+                            sharedPreferencesProvider.saveAccessToken(loginResponse.accessToken)
+                            sharedPreferencesProvider.saveUserInfo(loginResponse.userInfo)
+                        },
+                        {
+                            //error
+                        }
+                )
     }
 }
