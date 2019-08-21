@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -13,9 +15,22 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <!-- TextFieldBoxes Styles -->
+    <!-- TextFieldBoxes -->
     <style name="text_field_boxes">
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="panelBackgroundColor">@color/text_boxes_background</item>
+        <item name="primaryColor">@color/active</item>
+        <item name="secondaryColor">@color/text_boxes_color</item>
+        <item name="errorColor">@color/error</item>
+        <item name="helperTextColor">@color/white</item>
+    </style>
+
+    <style name="extended_edit_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 

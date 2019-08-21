@@ -9,36 +9,33 @@
     tools:context=".ui.authorization.AuthorizationActivity">
 
     <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+        android:id="@+id/login_text_field_boxes"
         style="@style/text_field_boxes"
         android:layout_marginStart="16dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="16dp"
-        app:labelText="@string/login"
-        app:panelBackgroundColor="@color/text_boxes_background"
-        app:primaryColor="@color/active"
-        app:secondaryColor="@color/text_boxes_color">
+        app:labelText="@string/login">
 
         <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-            android:layout_width="match_parent"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content" />
+            android:id="@+id/login_edit_text"
+            style="@style/extended_edit_text"
+            android:inputType="phone" />
 
     </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
     <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+        android:id="@+id/password_text_field_boxes"
         style="@style/text_field_boxes"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:labelText="@string/password"
-        app:panelBackgroundColor="@color/text_boxes_background"
-        app:primaryColor="@color/active"
-        app:secondaryColor="@color/text_boxes_color">
+        app:endIcon="@drawable/ic_eye_on"
+        app:labelText="@string/password">
 
         <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-            android:layout_width="match_parent"
-            android:textColor="@color/text_boxes_color"
-            android:layout_height="wrap_content" />
+            android:id="@+id/password_edit_text"
+            style="@style/extended_edit_text"
+            android:inputType="textPassword"/>
 
     </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
@@ -48,12 +45,11 @@
         android:layout_weight="1" />
 
     <Button
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginBottom="24dp"
+        android:id="@+id/login_button"
+        style="@style/button"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/login_button"
-        style="@style/button"/>
+        android:layout_marginBottom="24dp"
+        android:text="@string/login_button" />
 
 </LinearLayout>
