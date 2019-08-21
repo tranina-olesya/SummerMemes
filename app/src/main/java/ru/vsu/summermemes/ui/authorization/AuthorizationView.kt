@@ -15,4 +15,6 @@ interface AuthorizationView : MvpView {
     fun hideLoading()
 
     fun showLoginError()
+
+    fun openMainActivity()
 }

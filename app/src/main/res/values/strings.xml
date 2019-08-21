@@ -5,5 +5,5 @@
     <string name="login_button">Войти</string>
     <string name="password_helper">Пароль должен содержать %d символов</string>
     <string name="field_empty_error">Поле не может быть пустым</string>
-    <string name="login_error">Вы ввели неверные данные. \nПопробуйте еще раз</string>
+    <string name="login_error">Во время запроса произошла ошибка, возможно вы неверно ввели логин/пароль.</string>
 </resources>

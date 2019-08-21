@@ -50,6 +50,8 @@ class AuthorizationPresenter : MvpPresenter<AuthorizationView>() {
                         { loginResponse ->
                             sharedPreferencesProvider.saveAccessToken(loginResponse.accessToken)
                             sharedPreferencesProvider.saveUserInfo(loginResponse.userInfo)
+
+                            viewState.openMainActivity()
                         },
                         {
                             viewState.showLoginError()

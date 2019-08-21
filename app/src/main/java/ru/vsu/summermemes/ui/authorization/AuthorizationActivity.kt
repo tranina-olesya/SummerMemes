@@ -1,6 +1,7 @@
 package ru.vsu.summermemes.ui.authorization
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -16,6 +17,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_authorization.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.models.LoginRequestEntity
+import ru.vsu.summermemes.ui.main.MainActivity
 
 class AuthorizationActivity : MvpAppCompatActivity(), AuthorizationView {
 
@@ -150,10 +152,15 @@ class AuthorizationActivity : MvpAppCompatActivity(), AuthorizationView {
     override fun showLoginError() {
         val snackbar = Snackbar.make(parent_view, R.string.login_error, Snackbar.LENGTH_LONG)
 
-        snackbar.view.setBackgroundColor(ContextCompat.getColor(this@AuthorizationActivity, R.color.error))
+        snackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.error))
         val textView = snackbar.view.findViewById(android.support.design.R.id.snackbar_text) as? TextView
-        textView?.setTextColor(ContextCompat.getColor(this@AuthorizationActivity, R.color.white))
+        textView?.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         snackbar.show()
+    }
+
+    override fun openMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }
