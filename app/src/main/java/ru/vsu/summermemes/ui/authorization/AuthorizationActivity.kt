@@ -1,11 +1,13 @@
 package ru.vsu.summermemes.ui.authorization
 
+import android.app.Activity
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_authorization.*
@@ -30,17 +32,24 @@ class AuthorizationActivity : MvpAppCompatActivity(), AuthorizationView {
         hideLoading()
     }
 
-    override fun initUI() {
+    private fun initUI() {
         configurePasswordTextFiledBoxes()
+        configureLoginTextFiledBoxes()
         configureLoginButton()
+        configureHidingKeyboard()
     }
 
     private fun configurePasswordTextFiledBoxes() {
         password_edit_text.inputType =
-            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         password_edit_text.typeface = Typeface.DEFAULT
         configurePasswordValidation()
         configurePasswordHideIcon()
+        configurePasswordKeyboard()
+    }
+
+    private fun configureLoginTextFiledBoxes() {
+        configureLoginKeyboard()
     }
 
     private fun configurePasswordValidation() {
@@ -50,7 +59,7 @@ class AuthorizationActivity : MvpAppCompatActivity(), AuthorizationView {
                 s?.let {
                     if (s.length < MIN_PASSWORD_LENGTH)
                         password_text_field_boxes.helperText =
-                            String.format(getString(R.string.password_helper), MIN_PASSWORD_LENGTH)
+                                String.format(getString(R.string.password_helper), MIN_PASSWORD_LENGTH)
                     else
                         password_text_field_boxes.helperText = ""
                 }
@@ -64,7 +73,7 @@ class AuthorizationActivity : MvpAppCompatActivity(), AuthorizationView {
         password_text_field_boxes.endIconImageButton.setOnClickListener {
             if (isPasswordVisible) {
                 password_edit_text.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 password_edit_text.typeface = Typeface.DEFAULT
                 password_text_field_boxes.setEndIcon(R.drawable.ic_eye_on)
             } else {
@@ -102,5 +111,36 @@ class AuthorizationActivity : MvpAppCompatActivity(), AuthorizationView {
         progress_bar.visibility = View.GONE
         login_button.text = getString(R.string.login_button)
         login_button.isEnabled = true
+    }
+
+    private fun hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun showKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(view, 0)
+    }
+
+    private fun configurePasswordKeyboard() {
+        password_edit_text.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus)
+                showKeyboard(view)
+        }
+    }
+
+    private fun configureLoginKeyboard() {
+        login_edit_text.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus)
+                showKeyboard(view)
+        }
+    }
+
+    private fun configureHidingKeyboard() {
+        parent_view.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus)
+                hideKeyboard(view)
+        }
     }
 }
