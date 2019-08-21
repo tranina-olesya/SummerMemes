@@ -1,22 +1,32 @@
 package ru.vsu.summermemes.ui.authorization
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.os.Handler
-import android.support.v7.app.AppCompatActivity
+import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_authorization.*
 import ru.vsu.summermemes.R
-import ru.vsu.summermemes.ui.splash.SplashActivity
+import ru.vsu.summermemes.models.LoginRequestEntity
+import ru.vsu.summermemes.ui.main.MainActivity
 
-class AuthorizationActivity : AppCompatActivity() {
+class AuthorizationActivity : MvpAppCompatActivity(), AuthorizationView {
 
     companion object {
         const val MIN_PASSWORD_LENGTH = 6
     }
+
+    @InjectPresenter
+    lateinit var presenter: AuthorizationPresenter
 
     var isPasswordVisible = false
 
@@ -29,15 +39,22 @@ class AuthorizationActivity : AppCompatActivity() {
 
     private fun initUI() {
         configurePasswordTextFiledBoxes()
+        configureLoginTextFiledBoxes()
         configureLoginButton()
+        configureHidingKeyboard()
     }
 
     private fun configurePasswordTextFiledBoxes() {
         password_edit_text.inputType =
-            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         password_edit_text.typeface = Typeface.DEFAULT
         configurePasswordValidation()
         configurePasswordHideIcon()
+        configurePasswordKeyboard()
+    }
+
+    private fun configureLoginTextFiledBoxes() {
+        configureLoginKeyboard()
     }
 
     private fun configurePasswordValidation() {
@@ -47,11 +64,12 @@ class AuthorizationActivity : AppCompatActivity() {
                 s?.let {
                     if (s.length < MIN_PASSWORD_LENGTH)
                         password_text_field_boxes.helperText =
-                            String.format(getString(R.string.password_helper), MIN_PASSWORD_LENGTH)
+                                String.format(getString(R.string.password_helper), MIN_PASSWORD_LENGTH)
                     else
                         password_text_field_boxes.helperText = ""
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
     }
@@ -60,7 +78,7 @@ class AuthorizationActivity : AppCompatActivity() {
         password_text_field_boxes.endIconImageButton.setOnClickListener {
             if (isPasswordVisible) {
                 password_edit_text.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 password_edit_text.typeface = Typeface.DEFAULT
                 password_text_field_boxes.setEndIcon(R.drawable.ic_eye_on)
             } else {
@@ -74,36 +92,75 @@ class AuthorizationActivity : AppCompatActivity() {
 
     private fun configureLoginButton() {
         login_button.setOnClickListener {
-            showErrorsForEmptyFields()
-            val login = login_edit_text.text
-            val password = password_edit_text.text
-            if (login.isNotEmpty() && password.isNotEmpty() && password.length >= MIN_PASSWORD_LENGTH) {
-                showLoading()
-                Handler().postDelayed({
-                    hideLoading()
-                }, 500)
-            }
+            val login = login_edit_text.text.toString()
+            val password = password_edit_text.text.toString()
+            presenter.loginButtonClicked(LoginRequestEntity(login, password))
         }
     }
 
-    private fun showErrorsForEmptyFields() {
-        if (login_edit_text.text.isEmpty()) {
-            login_text_field_boxes.setError(getString(R.string.field_empty_error), false)
-        }
-        if (password_edit_text.text.isEmpty()) {
-            password_text_field_boxes.setError(getString(R.string.field_empty_error), false)
-        }
+    override fun showErrorForEmptyLogin() {
+        login_text_field_boxes.setError(getString(R.string.field_empty_error), false)
     }
 
-    private fun showLoading() {
+    override fun showErrorForEmptyPassword() {
+        password_text_field_boxes.setError(getString(R.string.field_empty_error), false)
+    }
+
+    override fun showLoading() {
         progress_bar.visibility = View.VISIBLE
         login_button.text = ""
         login_button.isEnabled = false
     }
 
-    private fun hideLoading() {
+    override fun hideLoading() {
         progress_bar.visibility = View.GONE
         login_button.text = getString(R.string.login_button)
         login_button.isEnabled = true
+    }
+
+    private fun hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun showKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(view, 0)
+    }
+
+    private fun configurePasswordKeyboard() {
+        password_edit_text.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus)
+                showKeyboard(view)
+        }
+    }
+
+    private fun configureLoginKeyboard() {
+        login_edit_text.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus)
+                showKeyboard(view)
+        }
+    }
+
+    private fun configureHidingKeyboard() {
+        parent_view.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus)
+                hideKeyboard(view)
+        }
+    }
+
+    override fun showLoginError() {
+        val snackbar = Snackbar.make(parent_view, R.string.login_error, Snackbar.LENGTH_LONG)
+
+        snackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.error))
+        val textView = snackbar.view.findViewById(android.support.design.R.id.snackbar_text) as? TextView
+        textView?.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+        snackbar.show()
+    }
+
+    override fun openMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }
