@@ -33,4 +33,12 @@ dependencies {
 
     // TextFieldBoxes
     implementation 'com.github.HITGIF:TextFieldBoxes:1.4.4'
+
+    // Retrofit 2
+    implementation "com.squareup.retrofit2:retrofit:2.6.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.6.0"
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:4.1.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
 }
