@@ -52,7 +52,7 @@ class AuthorizationPresenter : MvpPresenter<AuthorizationView>() {
                             sharedPreferencesProvider.saveUserInfo(loginResponse.userInfo)
                         },
                         {
-                            //error
+                            viewState.showLoginError()
                         }
                 )
     }
