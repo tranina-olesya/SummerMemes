@@ -2,21 +2,24 @@ package ru.vsu.summermemes.ui.authorization
 
 import android.graphics.Typeface
 import android.os.Bundle
-import android.os.Handler
-import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_authorization.*
 import ru.vsu.summermemes.R
-import ru.vsu.summermemes.ui.splash.SplashActivity
+import ru.vsu.summermemes.models.LoginRequestEntity
 
-class AuthorizationActivity : AppCompatActivity() {
+class AuthorizationActivity : MvpAppCompatActivity(), AuthorizationView {
 
     companion object {
         const val MIN_PASSWORD_LENGTH = 6
     }
+
+    @InjectPresenter
+    lateinit var presenter: AuthorizationPresenter
 
     var isPasswordVisible = false
 
@@ -27,7 +30,7 @@ class AuthorizationActivity : AppCompatActivity() {
         hideLoading()
     }
 
-    private fun initUI() {
+    override fun initUI() {
         configurePasswordTextFiledBoxes()
         configureLoginButton()
     }
@@ -52,6 +55,7 @@ class AuthorizationActivity : AppCompatActivity() {
                         password_text_field_boxes.helperText = ""
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
     }
@@ -74,34 +78,27 @@ class AuthorizationActivity : AppCompatActivity() {
 
     private fun configureLoginButton() {
         login_button.setOnClickListener {
-            showErrorsForEmptyFields()
-            val login = login_edit_text.text
-            val password = password_edit_text.text
-            if (login.isNotEmpty() && password.isNotEmpty() && password.length >= MIN_PASSWORD_LENGTH) {
-                showLoading()
-                Handler().postDelayed({
-                    hideLoading()
-                }, 500)
-            }
+            val login = login_edit_text.text.toString()
+            val password = password_edit_text.text.toString()
+            presenter.loginButtonClicked(LoginRequestEntity(login, password))
         }
     }
 
-    private fun showErrorsForEmptyFields() {
-        if (login_edit_text.text.isEmpty()) {
-            login_text_field_boxes.setError(getString(R.string.field_empty_error), false)
-        }
-        if (password_edit_text.text.isEmpty()) {
-            password_text_field_boxes.setError(getString(R.string.field_empty_error), false)
-        }
+    override fun showErrorForEmptyLogin() {
+        login_text_field_boxes.setError(getString(R.string.field_empty_error), false)
     }
 
-    private fun showLoading() {
+    override fun showErrorForEmptyPassword() {
+        password_text_field_boxes.setError(getString(R.string.field_empty_error), false)
+    }
+
+    override fun showLoading() {
         progress_bar.visibility = View.VISIBLE
         login_button.text = ""
         login_button.isEnabled = false
     }
 
-    private fun hideLoading() {
+    override fun hideLoading() {
         progress_bar.visibility = View.GONE
         login_button.text = getString(R.string.login_button)
         login_button.isEnabled = true
