@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import ru.vsu.summermemes.R
-import ru.vsu.summermemes.ui.authorization.AuthorizationActivity
+import ru.vsu.summermemes.ui.auth.AuthActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -26,7 +26,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun openNewActivity() {
-        val intent = Intent(this, AuthorizationActivity::class.java)
+        val intent = Intent(this, AuthActivity::class.java)
         startActivity(intent)
     }
 }

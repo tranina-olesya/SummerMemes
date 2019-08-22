@@ -6,13 +6,14 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.vsu.summermemes.BuildConfig
+import ru.vsu.summermemes.api.interfaces.AuthAPI
 
 
 object NetworkService {
-    const val BASE_URL = "https://demo3161256.mockable.io"
+    private const val BASE_URL = "https://demo3161256.mockable.io"
 
-    fun create(): MemesAPI {
-        return create(buildRetrofit(buildOkHttp()))
+    val authAPI by lazy {
+        createAuthAPI(buildRetrofit(buildOkHttp()))
     }
 
     private fun buildOkHttp(): OkHttpClient {
@@ -36,7 +37,7 @@ object NetworkService {
                 .build()
     }
 
-    private fun create(retrofit: Retrofit): MemesAPI {
-        return retrofit.create(MemesAPI::class.java)
+    private fun createAuthAPI(retrofit: Retrofit): AuthAPI {
+        return retrofit.create(AuthAPI::class.java)
     }
 }
