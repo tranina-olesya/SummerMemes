@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.vsu.summermemes.R
+import ru.vsu.summermemes.api.repositories.MemeRepository
 
 class FeedFragment : Fragment() {
 
@@ -14,6 +15,16 @@ class FeedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        MemeRepository()
+            .getMemes()
+            .subscribe(
+                { memesList ->
+                    print(memesList.count())
+                },
+                {
+                    print("ooh")
+                }
+            )
         return inflater.inflate(R.layout.fragment_feed, container, false)
     }
 

@@ -16,8 +16,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_auth.*
 import ru.vsu.summermemes.R
-import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
-import ru.vsu.summermemes.models.AuthRequestEntity
+import ru.vsu.summermemes.models.auth.AuthRequestEntity
 import ru.vsu.summermemes.ui.main.MainActivity
 
 class AuthActivity : MvpAppCompatActivity(), AuthView {
@@ -97,7 +96,12 @@ class AuthActivity : MvpAppCompatActivity(), AuthView {
         auth_button.setOnClickListener {
             val login = login_edit_text.text.toString()
             val password = password_edit_text.text.toString()
-            presenter.loginButtonClicked(AuthRequestEntity(login, password))
+            presenter.loginButtonClicked(
+                AuthRequestEntity(
+                    login,
+                    password
+                )
+            )
         }
     }
 

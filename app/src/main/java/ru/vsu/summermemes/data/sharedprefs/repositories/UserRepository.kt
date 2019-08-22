@@ -1,12 +1,11 @@
 package ru.vsu.summermemes.data.sharedprefs.repositories
 
 import ru.vsu.summermemes.SummerMemesApp
-import ru.vsu.summermemes.data.sharedprefs.SharedPreferencesConstants
 import ru.vsu.summermemes.data.sharedprefs.SharedPreferencesProvider
 import ru.vsu.summermemes.data.sharedprefs.storages.AuthStorage
 import ru.vsu.summermemes.data.sharedprefs.storages.UserStorage
-import ru.vsu.summermemes.models.AuthResponseEntity
-import ru.vsu.summermemes.models.UserInfo
+import ru.vsu.summermemes.models.auth.AuthResponseEntity
+import ru.vsu.summermemes.models.auth.UserInfo
 
 class UserRepository {
 

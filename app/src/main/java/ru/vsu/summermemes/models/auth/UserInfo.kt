@@ -1,4 +1,4 @@
-package ru.vsu.summermemes.models
+package ru.vsu.summermemes.models.auth
 
 import com.google.gson.annotations.SerializedName
 
