@@ -9,10 +9,16 @@ import ru.vsu.summermemes.R
 import ru.vsu.summermemes.databinding.MemeItemBinding
 import ru.vsu.summermemes.models.meme.MemeEntry
 
-class FeedAdapter(context: Context, val memeList: List<MemeEntry>) :
+class FeedAdapter(context: Context) :
     RecyclerView.Adapter<FeedAdapter.MemeViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
+
+    var memeList = listOf<MemeEntry>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun getItemCount(): Int = memeList.size
 

@@ -3,6 +3,7 @@ package ru.vsu.summermemes.databinding
 import android.databinding.BindingAdapter
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 object ImageBindingAdapter {
 
@@ -13,6 +14,7 @@ object ImageBindingAdapter {
             Glide
                 .with(view.context)
                 .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(view)
         }
     }

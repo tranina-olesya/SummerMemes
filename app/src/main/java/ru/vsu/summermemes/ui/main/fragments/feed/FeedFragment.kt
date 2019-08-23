@@ -19,6 +19,8 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
         const val COLUMNS_COUNT = 2
     }
 
+    private var feedAdapter: FeedAdapter? = null
+
     @InjectPresenter
     lateinit var presenter: FeedPresenter
 
@@ -37,7 +39,9 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
 
     override fun showMemesList(memes: List<MemeEntry>) {
         recycler_view.visibility = View.VISIBLE
-        configureRecyclerView(memes)
+
+        feedAdapter ?: configureRecyclerView()
+        feedAdapter?.memeList = memes
     }
 
     override fun hideMemesList() {
@@ -61,14 +65,15 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
     }
 
     private fun initUI() {
+        configureRecyclerView()
         hideLoading()
         hideLoadingError()
         hideMemesList()
     }
 
-    private fun configureRecyclerView(memes: List<MemeEntry>) {
+    private fun configureRecyclerView() {
         activity?.let {
-            val feedAdapter = FeedAdapter(it, memes)
+            feedAdapter = FeedAdapter(it)
             val layoutManager =
                 StaggeredGridLayoutManager(COLUMNS_COUNT, LinearLayoutManager.VERTICAL)
             recycler_view.layoutManager = layoutManager
