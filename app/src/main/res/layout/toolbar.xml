@@ -18,7 +18,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Популярные мемы" />
+            android:text="@string/popular_memes" />
 
         <ImageButton
             android:id="@+id/toolbar_search_button"

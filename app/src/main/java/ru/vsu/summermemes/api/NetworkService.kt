@@ -7,6 +7,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.vsu.summermemes.BuildConfig
 import ru.vsu.summermemes.api.interfaces.AuthAPI
+import ru.vsu.summermemes.api.interfaces.MemeAPI
 
 
 object NetworkService {
@@ -14,6 +15,10 @@ object NetworkService {
 
     val authAPI by lazy {
         createAuthAPI(buildRetrofit(buildOkHttp()))
+    }
+
+    val memeAPI by lazy {
+        createMemeAPI(buildRetrofit(buildOkHttp()))
     }
 
     private fun buildOkHttp(): OkHttpClient {
@@ -39,5 +44,9 @@ object NetworkService {
 
     private fun createAuthAPI(retrofit: Retrofit): AuthAPI {
         return retrofit.create(AuthAPI::class.java)
+    }
+
+    private fun createMemeAPI(retrofit: Retrofit): MemeAPI {
+        return retrofit.create(MemeAPI::class.java)
     }
 }

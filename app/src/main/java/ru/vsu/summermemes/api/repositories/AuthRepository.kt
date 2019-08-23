@@ -4,8 +4,8 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.vsu.summermemes.api.NetworkService
-import ru.vsu.summermemes.models.AuthRequestEntity
-import ru.vsu.summermemes.models.AuthResponseEntity
+import ru.vsu.summermemes.models.auth.AuthRequestEntity
+import ru.vsu.summermemes.models.auth.AuthResponseEntity
 
 class AuthRepository {
     val authAPI = NetworkService.authAPI

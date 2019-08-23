@@ -2,7 +2,7 @@ package ru.vsu.summermemes.data.sharedprefs.storages
 
 import android.content.SharedPreferences
 import ru.vsu.summermemes.data.sharedprefs.SharedPreferencesConstants
-import ru.vsu.summermemes.models.UserInfo
+import ru.vsu.summermemes.models.auth.UserInfo
 
 class UserStorage(val sharedPreferences: SharedPreferences) {
 

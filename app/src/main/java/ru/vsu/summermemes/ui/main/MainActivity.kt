@@ -17,13 +17,20 @@ class MainActivity : AppCompatActivity() {
         const val PROFILE_TAG = "PROFILE"
         const val ADD_TAG = "ADD"
     }
+
     private lateinit var fragmentManager: FragmentManager
 
-    private val feedFragment = FeedFragment()
+    private val feedFragment by lazy {
+        FeedFragment()
+    }
 
-    private val addMemeFragment = AddMemeFragment()
+    private val addMemeFragment by lazy {
+        AddMemeFragment()
+    }
 
-    private val profileFragment = ProfileFragment()
+    private val profileFragment by lazy {
+        ProfileFragment()
+    }
 
     private var lastFragment: Fragment? = null
 

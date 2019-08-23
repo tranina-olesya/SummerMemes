@@ -15,4 +15,5 @@
     <color name="black">#000000</color>
     <color name="bottom_nav_background">#12102B</color>
     <color name="clear">#00000000 </color>
+    <color name="feed_loading_error_text">#9FACC7</color>
 </resources>

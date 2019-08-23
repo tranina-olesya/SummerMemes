@@ -5,7 +5,7 @@ import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.disposables.Disposable
 import ru.vsu.summermemes.api.repositories.AuthRepository
 import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
-import ru.vsu.summermemes.models.AuthRequestEntity
+import ru.vsu.summermemes.models.auth.AuthRequestEntity
 
 @InjectViewState
 class AuthPresenter : MvpPresenter<AuthView>() {
