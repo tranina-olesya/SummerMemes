@@ -4,12 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.fragments.feed.FeedFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:background="@color/error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
-        android:id="@+id/text_view"
-        android:gravity="center"
+        android:id="@+id/error_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/white"
-        android:text="Meme list"/>
+        android:gravity="center"
+        android:text="@string/feed_loading_error"
+        android:textColor="@color/feed_loading_error_text"
+        android:textSize="14sp" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:translationZ="90dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
 </FrameLayout>

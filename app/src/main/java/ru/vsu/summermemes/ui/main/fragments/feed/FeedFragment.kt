@@ -2,30 +2,60 @@ package ru.vsu.summermemes.ui.main.fragments.feed
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.arellomobile.mvp.MvpAppCompatFragment
+import com.arellomobile.mvp.presenter.InjectPresenter
+import kotlinx.android.synthetic.main.fragment_feed.*
 import ru.vsu.summermemes.R
-import ru.vsu.summermemes.api.repositories.MemeRepository
+import ru.vsu.summermemes.models.meme.MemeEntry
 
-class FeedFragment : Fragment() {
+class FeedFragment : MvpAppCompatFragment(), FeedView {
+
+    @InjectPresenter
+    lateinit var presenter: FeedPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        MemeRepository()
-            .getMemes()
-            .subscribe(
-                { memesList ->
-                    print(memesList.count())
-                },
-                {
-                    print("ooh")
-                }
-            )
         return inflater.inflate(R.layout.fragment_feed, container, false)
     }
 
+    override fun onStart() {
+        super.onStart()
+        initUI()
+        presenter.viewIsReady()
+    }
+
+    private fun initUI() {
+        hideLoading()
+        hideLoadingError()
+        hideMemesList()
+    }
+
+    override fun showMemesList(memes: List<MemeEntry>) {
+        recycler_view.visibility = View.VISIBLE
+    }
+
+    override fun hideMemesList() {
+        recycler_view.visibility = View.GONE
+    }
+
+    override fun showLoadingError() {
+        error_text_view.visibility = View.VISIBLE
+    }
+
+    override fun hideLoadingError() {
+        error_text_view.visibility = View.GONE
+    }
+
+    override fun showLoading() {
+        progress_bar.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        progress_bar.visibility = View.GONE
+    }
 }
