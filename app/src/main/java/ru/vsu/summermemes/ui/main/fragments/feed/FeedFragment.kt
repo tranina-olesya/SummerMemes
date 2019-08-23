@@ -2,6 +2,8 @@ package ru.vsu.summermemes.ui.main.fragments.feed
 
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,10 @@ import ru.vsu.summermemes.R
 import ru.vsu.summermemes.models.meme.MemeEntry
 
 class FeedFragment : MvpAppCompatFragment(), FeedView {
+
+    companion object {
+        const val COLUMNS_COUNT = 2
+    }
 
     @InjectPresenter
     lateinit var presenter: FeedPresenter
@@ -29,14 +35,9 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
         presenter.viewIsReady()
     }
 
-    private fun initUI() {
-        hideLoading()
-        hideLoadingError()
-        hideMemesList()
-    }
-
     override fun showMemesList(memes: List<MemeEntry>) {
         recycler_view.visibility = View.VISIBLE
+        configureRecyclerView(memes)
     }
 
     override fun hideMemesList() {
@@ -57,5 +58,21 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
 
     override fun hideLoading() {
         progress_bar.visibility = View.GONE
+    }
+
+    private fun initUI() {
+        hideLoading()
+        hideLoadingError()
+        hideMemesList()
+    }
+
+    private fun configureRecyclerView(memes: List<MemeEntry>) {
+        activity?.let {
+            val feedAdapter = FeedAdapter(it, memes)
+            val layoutManager =
+                StaggeredGridLayoutManager(COLUMNS_COUNT, LinearLayoutManager.VERTICAL)
+            recycler_view.layoutManager = layoutManager
+            recycler_view.adapter = feedAdapter
+        }
     }
 }

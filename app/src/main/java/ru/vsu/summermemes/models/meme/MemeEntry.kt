@@ -14,5 +14,5 @@ data class MemeEntry(
     @SerializedName("createdDate")
     val createdDate: Int,
     @SerializedName("photoUtl")
-    val photoUtl: String
+    val photoUrl: String
 )
