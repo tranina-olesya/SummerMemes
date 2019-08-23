@@ -35,7 +35,8 @@
                     android:layout_height="wrap_content"
                     android:maxHeight="500dp"
                     android:minHeight="100dp"
-                    android:scaleType="center" />
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter" />
 
                 <TextView
                     android:id="@+id/meme_title"
