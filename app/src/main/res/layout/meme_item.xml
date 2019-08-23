@@ -1,66 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
 
-    <android.support.v7.widget.CardView
+    <data>
+
+        <variable
+            name="meme"
+            type="ru.vsu.summermemes.models.meme.MemeEntry" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/background_2"
-        app:cardCornerRadius="4dp">
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/clear"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/meme_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:src="@drawable/surf_edu" />
-
-            <TextView
-                android:id="@+id/meme_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginEnd="13dp"
-                android:fontFamily="sans-serif-medium"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="aaa"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/background_2"
+            app:cardCornerRadius="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:background="@color/clear"
+                android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/favorite_button"
+                <ImageView
+                    android:id="@+id/meme_image"
+                    url="@{ meme.photoUrl }"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="500dp"
+                    android:minHeight="100dp"
+                    android:scaleType="center" />
+
+                <TextView
+                    android:id="@+id/meme_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_favorite_empty" />
+                    android:layout_marginTop="9dp"
+                    android:layout_marginEnd="13dp"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:maxLines="1"
+                    android:text="@{ meme.title }"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
 
-                <ImageButton
-                    android:id="@+id/share_button"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_share" />
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/favorite_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_favorite_empty" />
+
+                    <ImageButton
+                        android:id="@+id/share_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_share" />
+
+                </LinearLayout>
 
             </LinearLayout>
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-</FrameLayout>
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
+</layout>
