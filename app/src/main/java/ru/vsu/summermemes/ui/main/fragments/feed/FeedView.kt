@@ -13,6 +13,8 @@ interface FeedView: MvpView {
 
     fun hideLoadingError()
 
+    fun showLoadingErrorOnTopOfContent()
+
     fun showLoading()
 
     fun hideLoading()
