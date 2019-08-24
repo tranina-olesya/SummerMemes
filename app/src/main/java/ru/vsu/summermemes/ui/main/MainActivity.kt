@@ -1,5 +1,6 @@
 package ru.vsu.summermemes.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -9,6 +10,7 @@ import ru.vsu.summermemes.R
 import ru.vsu.summermemes.ui.main.fragments.addmeme.AddMemeFragment
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 import ru.vsu.summermemes.ui.main.fragments.profile.ProfileFragment
+import ru.vsu.summermemes.ui.memedetail.MemeDetailActivity
 
 class MainActivity : AppCompatActivity() {
 

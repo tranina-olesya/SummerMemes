@@ -1,7 +1,7 @@
 package ru.vsu.summermemes.ui.main.fragments.feed
 
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
@@ -13,6 +13,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_feed.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.models.meme.MemeEntry
+import ru.vsu.summermemes.ui.memedetail.MemeDetailActivity
 
 class FeedFragment : MvpAppCompatFragment(), FeedView {
 
@@ -65,6 +66,14 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
         progress_bar.visibility = View.GONE
     }
 
+    override fun openMemeDetailActivity(meme: MemeEntry) {
+        activity?.let {
+            val intent = Intent(activity, MemeDetailActivity::class.java)
+            intent.putExtra(MemeDetailActivity.MEME_EXTRA, meme)
+            startActivity(intent)
+        }
+    }
+
     private fun initUI() {
         configureRecyclerView()
         configureSwipeRefreshLayout()
@@ -75,7 +84,7 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
 
     private fun configureRecyclerView() {
         activity?.let {
-            feedAdapter = FeedAdapter(it)
+            feedAdapter = FeedAdapter(it, presenter)
             val layoutManager =
                 StaggeredGridLayoutManager(COLUMNS_COUNT, LinearLayoutManager.VERTICAL)
             recycler_view.layoutManager = layoutManager

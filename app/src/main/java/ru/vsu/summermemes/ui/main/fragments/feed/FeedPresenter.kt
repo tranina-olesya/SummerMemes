@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.disposables.Disposable
 import ru.vsu.summermemes.api.repositories.MemeRepository
+import ru.vsu.summermemes.models.meme.MemeEntry
 
 @InjectViewState
 class FeedPresenter : MvpPresenter<FeedView>() {
@@ -37,5 +38,9 @@ class FeedPresenter : MvpPresenter<FeedView>() {
                     viewState.hideMemesList()
                     viewState.showLoadingError()
                 })
+    }
+
+    fun memeChosen(meme: MemeEntry) {
+        viewState.openMemeDetailActivity(meme)
     }
 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="meme"
+            type="ru.vsu.summermemes.models.meme.MemeEntry" />
+
+        <variable
+            name="image"
+            type="ru.vsu.summermemes.models.meme.MemeEntry" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_2"
+        android:baselineAligned="false"
+        android:orientation="vertical"
+        tools:context=".ui.memedetail.MemeDetailActivity">
+
+        <include layout="@layout/toolbar_meme_detail_activity" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/meme_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:lineHeight="31dp"
+                    android:text="@{ meme.title }"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/meme_image"
+                    url="@{ meme.photoUrl }"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/meme_date_created"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:lineHeight="14dp"
+                        android:textColor="@color/meme_detail_date_text"
+                        android:textSize="12sp" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_favorite_empty" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:lineHeight="20dp"
+                    android:text="@{ meme.description }"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

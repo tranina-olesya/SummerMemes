@@ -15,4 +15,6 @@ interface FeedView: MvpView {
     fun showLoading()
 
     fun hideLoading()
+
+    fun openMemeDetailActivity(meme: MemeEntry)
 }

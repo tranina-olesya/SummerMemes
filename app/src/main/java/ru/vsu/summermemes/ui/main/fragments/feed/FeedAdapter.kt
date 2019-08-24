@@ -9,7 +9,7 @@ import ru.vsu.summermemes.R
 import ru.vsu.summermemes.databinding.MemeItemBinding
 import ru.vsu.summermemes.models.meme.MemeEntry
 
-class FeedAdapter(context: Context) :
+class FeedAdapter(context: Context, val presenter: FeedPresenter) :
     RecyclerView.Adapter<FeedAdapter.MemeViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
@@ -29,12 +29,13 @@ class FeedAdapter(context: Context) :
     }
 
     override fun onBindViewHolder(viewHolder: MemeViewHolder, position: Int) {
-        viewHolder.bind(memeList[position])
+        viewHolder.bind(memeList[position], presenter)
     }
 
     class MemeViewHolder(val binding: MemeItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(meme: MemeEntry) {
+        fun bind(meme: MemeEntry, presenter: FeedPresenter) {
             binding.meme = meme
+            binding.presenter = presenter
         }
     }
 }
