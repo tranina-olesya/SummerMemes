@@ -13,7 +13,7 @@ data class MemeEntry(
     @SerializedName("isFavorite")
     val isFavorite: Boolean,
     @SerializedName("createdDate")
-    val createdDate: Int,
+    val createdDate: Long,
     @SerializedName("photoUtl")
     val photoUrl: String
 ) : Serializable

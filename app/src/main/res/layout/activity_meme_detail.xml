@@ -63,8 +63,8 @@
                     <TextView
                         android:id="@+id/meme_date_created"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:lineHeight="14dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:textColor="@color/meme_detail_date_text"
                         android:textSize="12sp" />
 
@@ -77,10 +77,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?android:selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_favorite_empty" />
+                        android:src="@{ meme.isFavorite ? @drawable/ic_favorite : @drawable/ic_favorite_empty}" />
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/meme_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

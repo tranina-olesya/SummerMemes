@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:background="?android:selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_favorite_empty" />
+                        android:src="@{ meme.isFavorite ? @drawable/ic_favorite : @drawable/ic_favorite_empty}" />
 
                     <ImageButton
                         android:id="@+id/share_button"
