@@ -18,6 +18,7 @@ class FeedPresenter : MvpPresenter<FeedView>() {
 
     fun refreshMemes() {
         viewState.hideMemesList()
+        viewState.hideLoadingError()
         loadMemes()
     }
 
