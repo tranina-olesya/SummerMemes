@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -21,7 +21,9 @@
         android:orientation="vertical"
         tools:context=".ui.memedetail.MemeDetailActivity">
 
-        <include layout="@layout/toolbar_meme_detail_activity" />
+        <include
+            layout="@layout/toolbar_meme_detail_activity"
+            app:meme="@{ meme }" />
 
         <ScrollView
             android:layout_width="match_parent"
