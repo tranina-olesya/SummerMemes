@@ -1,16 +1,14 @@
 package ru.vsu.summermemes.ui.main
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.ui.main.fragments.addmeme.AddMemeFragment
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 import ru.vsu.summermemes.ui.main.fragments.profile.ProfileFragment
-import ru.vsu.summermemes.ui.memedetail.MemeDetailActivity
 
 class MainActivity : AppCompatActivity() {
 

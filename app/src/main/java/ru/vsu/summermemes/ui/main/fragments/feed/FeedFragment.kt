@@ -3,16 +3,15 @@ package ru.vsu.summermemes.ui.main.fragments.feed
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_feed.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.models.meme.MemeEntry
@@ -71,11 +70,12 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
 
     override fun showLoadingErrorOnTopOfContent() {
         activity?.let {
-            val snackbar = Snackbar.make(parent_view, R.string.refresh_memes_error, Snackbar.LENGTH_LONG)
+            val snackbar =
+                Snackbar.make(parent_view, R.string.refresh_memes_error, Snackbar.LENGTH_LONG)
 
             snackbar.view.setBackgroundColor(ContextCompat.getColor(it, R.color.error))
             val textView =
-                snackbar.view.findViewById(android.support.design.R.id.snackbar_text) as? TextView
+                snackbar.view.findViewById(com.google.android.material.R.id.snackbar_text) as? TextView
             textView?.setTextColor(ContextCompat.getColor(it, R.color.white))
 
             snackbar.show()
@@ -103,7 +103,10 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
         activity?.let {
             feedAdapter = FeedAdapter(it, presenter)
             val layoutManager =
-                StaggeredGridLayoutManager(COLUMNS_COUNT, LinearLayoutManager.VERTICAL)
+                androidx.recyclerview.widget.StaggeredGridLayoutManager(
+                    COLUMNS_COUNT,
+                    LinearLayoutManager.VERTICAL
+                )
             recycler_view.layoutManager = layoutManager
             recycler_view.adapter = feedAdapter
         }

@@ -1,7 +1,7 @@
 package ru.vsu.summermemes.ui.splash
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import ru.vsu.summermemes.R
