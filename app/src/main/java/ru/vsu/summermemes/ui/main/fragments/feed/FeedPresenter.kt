@@ -16,6 +16,12 @@ class FeedPresenter : MvpPresenter<FeedView>() {
         loadMemes()
     }
 
+    fun refreshMemes() {
+        viewState.hideMemesList()
+        viewState.hideLoadingError()
+        loadMemes()
+    }
+
     fun loadMemes() {
         viewState.showLoading()
         subscription = memeRepository

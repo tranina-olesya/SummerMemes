@@ -1,6 +1,7 @@
 package ru.vsu.summermemes.ui.main.fragments.feed
 
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
@@ -66,6 +67,7 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
 
     private fun initUI() {
         configureRecyclerView()
+        configureSwipeRefreshLayout()
         hideLoading()
         hideLoadingError()
         hideMemesList()
@@ -78,6 +80,14 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
                 StaggeredGridLayoutManager(COLUMNS_COUNT, LinearLayoutManager.VERTICAL)
             recycler_view.layoutManager = layoutManager
             recycler_view.adapter = feedAdapter
+        }
+    }
+
+    private fun configureSwipeRefreshLayout() {
+        swipe_refresh_layout.setProgressBackgroundColorSchemeResource(R.color.active)
+        swipe_refresh_layout.setOnRefreshListener {
+            swipe_refresh_layout.isRefreshing = false
+            presenter.refreshMemes()
         }
     }
 }
