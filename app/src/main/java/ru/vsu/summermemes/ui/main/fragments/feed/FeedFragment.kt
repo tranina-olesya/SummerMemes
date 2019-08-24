@@ -66,10 +66,11 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
         progress_bar.visibility = View.GONE
     }
 
-    override fun openMemeDetailActivity(meme: MemeEntry) {
+    override fun openMemeDetailActivity(meme: MemeEntry, byteArray: ByteArray?) {
         activity?.let {
             val intent = Intent(activity, MemeDetailActivity::class.java)
             intent.putExtra(MemeDetailActivity.MEME_EXTRA, meme)
+            intent.putExtra(MemeDetailActivity.IMAGE_MEME_EXTRA, byteArray)
             startActivity(intent)
         }
     }
