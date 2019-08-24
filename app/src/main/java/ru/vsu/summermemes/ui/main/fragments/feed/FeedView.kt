@@ -1,6 +1,5 @@
 package ru.vsu.summermemes.ui.main.fragments.feed
 
-import android.graphics.Bitmap
 import com.arellomobile.mvp.MvpView
 import ru.vsu.summermemes.models.meme.MemeEntry
 

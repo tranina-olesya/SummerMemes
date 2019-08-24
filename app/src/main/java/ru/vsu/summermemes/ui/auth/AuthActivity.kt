@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.content.ContextCompat
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -163,7 +163,7 @@ class AuthActivity : MvpAppCompatActivity(), AuthView {
 
         snackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.error))
         val textView =
-            snackbar.view.findViewById(android.support.design.R.id.snackbar_text) as? TextView
+            snackbar.view.findViewById(com.google.android.material.R.id.snackbar_text) as? TextView
         textView?.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         snackbar.show()

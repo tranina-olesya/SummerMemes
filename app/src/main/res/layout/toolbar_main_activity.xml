@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@color/background_2"
     android:layout_height="@dimen/toolbar_height">
@@ -28,4 +28,4 @@
             android:background="?android:selectableItemBackgroundBorderless"
             android:src="@drawable/ic_search" />
     </LinearLayout>
-</android.support.v7.widget.Toolbar>
+</androidx.appcompat.widget.Toolbar>
