@@ -3,11 +3,14 @@ package ru.vsu.summermemes.ui.main.fragments.feed
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_feed.*
@@ -33,8 +36,8 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
         return inflater.inflate(R.layout.fragment_feed, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         initUI()
         presenter.viewIsReady()
     }
@@ -59,16 +62,29 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
     }
 
     override fun showLoading() {
-        progress_bar.visibility = View.VISIBLE
+        progress_view.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        progress_bar.visibility = View.GONE
+        progress_view.visibility = View.GONE
+    }
+
+    override fun showLoadingErrorOnTopOfContent() {
+        activity?.let {
+            val snackbar = Snackbar.make(parent_view, R.string.refresh_memes_error, Snackbar.LENGTH_LONG)
+
+            snackbar.view.setBackgroundColor(ContextCompat.getColor(it, R.color.error))
+            val textView =
+                snackbar.view.findViewById(android.support.design.R.id.snackbar_text) as? TextView
+            textView?.setTextColor(ContextCompat.getColor(it, R.color.white))
+
+            snackbar.show()
+        }
     }
 
     override fun openMemeDetailActivity(meme: MemeEntry, byteArray: ByteArray?) {
-        activity?.let {
-            val intent = Intent(activity, MemeDetailActivity::class.java)
+        activity?.apply {
+            val intent = Intent(this, MemeDetailActivity::class.java)
             intent.putExtra(MemeDetailActivity.MEME_EXTRA, meme)
             intent.putExtra(MemeDetailActivity.IMAGE_MEME_EXTRA, byteArray)
             startActivity(intent)

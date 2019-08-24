@@ -20,6 +20,7 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/main_bottom_nav_menu"
         android:layout_width="match_parent"
+        android:layout_marginTop="-8dp"
         android:layout_height="56dp"
         app:labelVisibilityMode="unlabeled"
         android:background="@drawable/bottom_nav_menu_background"

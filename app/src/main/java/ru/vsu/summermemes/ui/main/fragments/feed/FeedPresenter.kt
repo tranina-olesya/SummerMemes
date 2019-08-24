@@ -15,12 +15,13 @@ class FeedPresenter : MvpPresenter<FeedView>() {
 
     private var subscription: Disposable? = null
 
+    private var memeList: List<MemeEntry> = listOf()
+
     fun viewIsReady() {
         loadMemes()
     }
 
     fun refreshMemes() {
-        viewState.hideMemesList()
         viewState.hideLoadingError()
         loadMemes()
     }
@@ -34,11 +35,14 @@ class FeedPresenter : MvpPresenter<FeedView>() {
             }
             .subscribe(
                 { memeList ->
+                    this.memeList = memeList
                     viewState.hideLoadingError()
                     viewState.showMemesList(memeList)
                 }, {
-                    viewState.hideMemesList()
-                    viewState.showLoadingError()
+                    if (memeList.isEmpty())
+                        viewState.showLoadingError()
+                    else
+                        viewState.showLoadingErrorOnTopOfContent()
                 })
     }
 
