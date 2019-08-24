@@ -17,6 +17,7 @@
         android:layout_marginBottom="8dp">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/meme_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/background_2"
@@ -33,9 +34,9 @@
                     url="@{ meme.photoUrl }"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     android:maxHeight="500dp"
                     android:minHeight="100dp"
-                    android:adjustViewBounds="true"
                     android:scaleType="fitCenter" />
 
                 <TextView
@@ -64,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:background="?android:selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_favorite_empty" />
+                        android:src="@{ meme.isFavorite ? @drawable/ic_favorite : @drawable/ic_favorite_empty}" />
 
                     <ImageButton
                         android:id="@+id/share_button"

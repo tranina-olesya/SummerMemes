@@ -1,5 +1,6 @@
 package ru.vsu.summermemes.ui.main.fragments.feed
 
+import android.graphics.Bitmap
 import com.arellomobile.mvp.MvpView
 import ru.vsu.summermemes.models.meme.MemeEntry
 
@@ -15,4 +16,6 @@ interface FeedView: MvpView {
     fun showLoading()
 
     fun hideLoading()
+
+    fun openMemeDetailActivity(meme: MemeEntry, byteArray: ByteArray?)
 }

@@ -8,4 +8,9 @@
     <string name="auth_error">Во время запроса произошла ошибка, возможно вы неверно ввели логин/пароль.</string>
     <string name="feed_loading_error">Не удалось загрузить ленту \nОбновите экран или попробуйте позже.</string>
     <string name="popular_memes">Популярные мемы</string>
+    <string name="today">сегодня</string>
+    <string name="day_form_1">день</string>
+    <string name="day_form_2">дня</string>
+    <string name="day_form_3">дней</string>
+    <string name="days_ago">назад</string>
 </resources>

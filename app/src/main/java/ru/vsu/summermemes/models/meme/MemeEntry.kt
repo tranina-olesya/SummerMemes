@@ -1,6 +1,7 @@
 package ru.vsu.summermemes.models.meme
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class MemeEntry(
     @SerializedName("id")
@@ -12,7 +13,7 @@ data class MemeEntry(
     @SerializedName("isFavorite")
     val isFavorite: Boolean,
     @SerializedName("createdDate")
-    val createdDate: Int,
+    val createdDate: Long,
     @SerializedName("photoUtl")
     val photoUrl: String
-)
+) : Serializable
