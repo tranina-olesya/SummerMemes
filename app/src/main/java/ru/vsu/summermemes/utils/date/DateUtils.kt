@@ -1,4 +1,4 @@
-package ru.vsu.summermemes.utils
+package ru.vsu.summermemes.utils.date
 
 import java.util.Date
 

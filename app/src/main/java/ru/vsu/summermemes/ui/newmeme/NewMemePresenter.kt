@@ -7,8 +7,8 @@ import io.reactivex.disposables.Disposable
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.data.db.repositories.LocalMemeRepository
 import ru.vsu.summermemes.models.meme.MemeEntry
-import ru.vsu.summermemes.utils.DateUtils
-import ru.vsu.summermemes.utils.ImageFileSaver
+import ru.vsu.summermemes.utils.date.DateUtils
+import ru.vsu.summermemes.utils.image.ImageFileSaver
 import java.util.*
 
 @InjectViewState

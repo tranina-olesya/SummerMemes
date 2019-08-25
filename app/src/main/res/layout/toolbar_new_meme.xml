@@ -24,16 +24,10 @@
 
         <Button
             android:id="@+id/create_meme_button"
-            style="@style/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/button.simple"
             android:layout_gravity="center"
-            android:background="@color/clear"
             android:text="@string/create_button"
-            android:enabled="false"
-            android:textColor="@drawable/create_meme_button_text_color"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:textSize="14sp" />
+            android:enabled="false" />
 
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>

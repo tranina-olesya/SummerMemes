@@ -2,7 +2,7 @@ package ru.vsu.summermemes.databinding
 
 import androidx.databinding.BindingAdapter
 import android.widget.ImageView
-import ru.vsu.summermemes.utils.GlideImageLoader
+import ru.vsu.summermemes.utils.image.GlideImageLoader
 
 object ImageBindingAdapter {
 

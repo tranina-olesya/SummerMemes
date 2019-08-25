@@ -1,4 +1,4 @@
-package ru.vsu.summermemes.utils
+package ru.vsu.summermemes.utils.image
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

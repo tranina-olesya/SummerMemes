@@ -1,15 +1,13 @@
-package ru.vsu.summermemes.utils
+package ru.vsu.summermemes.utils.image
 
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.vsu.summermemes.SummerMemesApp
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileOutputStream
 
 class ImageFileSaver {

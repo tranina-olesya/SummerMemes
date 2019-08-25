@@ -19,4 +19,7 @@
     <string name="title_hint">Заголовок</string>
     <string name="text_hint">Текст</string>
     <string name="meme_save_error">Не удалось сохранить мем</string>
+    <string name="choose_photo">Выбрать фото</string>
+    <string name="from_gallery">Из галереи</string>
+    <string name="make_photo">Сделать фото</string>
 </resources>

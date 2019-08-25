@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_new_meme.*
 import kotlinx.android.synthetic.main.toolbar_new_meme.*
 import ru.vsu.summermemes.R
+import ru.vsu.summermemes.ui.newmeme.fragments.AddImageDialogFragment
 
 class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
     companion object {
@@ -82,8 +83,12 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
 
     private fun configureAddImageButton() {
         add_image_button.setOnClickListener {
+            val dialog = AddImageDialogFragment()
+            dialog.show(supportFragmentManager, "")
+
             showMemeImage()
             meme_image.setImageResource(R.drawable.surf_edu)
+
             updateButtonEnabledState()
         }
     }

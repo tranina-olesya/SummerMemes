@@ -73,4 +73,13 @@
         <item name="android:textColor">@color/edit_text_hint</item>
     </style>
 
+    <style name="button.simple">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/clear</item>
+        <item name="android:textColor">@drawable/create_meme_button_text_color</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>
