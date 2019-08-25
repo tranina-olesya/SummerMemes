@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.newmeme.NewMemeActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_new_meme" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/meme_title_text_input_layout"
+                style="@style/new_meme_text_input_layout"
+                android:layout_marginTop="24dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/meme_title_edit_text"
+                    style="@style/new_meme_edit_text"
+                    android:hint="@string/title"
+                    android:lineHeight="34dp"
+                    android:textSize="24sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/meme_description_text_input_layout"
+                style="@style/new_meme_text_input_layout"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/meme_description_edit_text"
+                    style="@style/new_meme_edit_text"
+                    android:hint="@string/text"
+                    android:lineHeight="20dp"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+                <ImageButton
+                    android:id="@+id/delete_image"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="end|top"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/close_image_background"
+                    android:src="@drawable/ic_close" />
+
+                <ImageView
+                    android:id="@+id/meme_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/surf_edu" />
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/add_image_button"
+        android:layout_width="@dimen/add_image_button_size"
+        android:layout_height="@dimen/add_image_button_size"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/add_image_button_background"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_attach"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
