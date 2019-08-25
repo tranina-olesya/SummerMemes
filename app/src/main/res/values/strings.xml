@@ -22,4 +22,6 @@
     <string name="choose_photo">Выбрать фото</string>
     <string name="from_gallery">Из галереи</string>
     <string name="make_photo">Сделать фото</string>
+    <string name="about_app">О приложении</string>
+    <string name="logout">Выйти</string>
 </resources>

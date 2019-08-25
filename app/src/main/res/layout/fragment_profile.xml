@@ -1,15 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.main.fragments.profile.ProfileFragment">
+<layout>
 
-    <TextView
-        android:gravity="center"
+    <data>
+
+        <variable
+            name="userInfo"
+            type="ru.vsu.summermemes.models.auth.UserInfo" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/white"
-        android:text="Profile" />
+        android:background="@color/background_2"
+        tools:context=".ui.main.fragments.profile.ProfileFragment">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/profile_image_view"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            urlRoundImage="@{ imageUrl }"
+            app:layout_constraintBottom_toBottomOf="@id/profile_image_border"
+            app:layout_constraintLeft_toLeftOf="@id/profile_image_border"
+            app:layout_constraintRight_toRightOf="@id/profile_image_border"
+            app:layout_constraintTop_toTopOf="@id/profile_image_border" />
+
+        <View
+            android:id="@+id/profile_image_border"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@drawable/profile_image_border"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:lineHeight="21dp"
+            android:text="@{ userInfo.username }"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/profile_image_border" />
+
+        <TextView
+            android:id="@+id/user_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="32dp"
+            android:lineHeight="23dp"
+            android:text="@{ userInfo.userDescription }"
+            android:textAlignment="center"
+            android:textColor="@color/profile_user_description"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/username" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

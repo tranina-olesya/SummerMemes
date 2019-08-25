@@ -19,6 +19,7 @@
     <color name="meme_detail_date_text">#CCFFFFFF</color>
     <color name="progress_view_background">#99000000</color>
     <color name="edit_text_hint">#80FFFFFF</color>
+    <color name="profile_user_description">#99FFFFFF</color>
     <color name="close_image_background">#CC000000</color>
     <color name="active_disabled">#4D1EF0D7</color>
 </resources>

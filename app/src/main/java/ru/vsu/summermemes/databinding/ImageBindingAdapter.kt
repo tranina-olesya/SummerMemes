@@ -14,4 +14,11 @@ object ImageBindingAdapter {
         }
     }
 
+    @JvmStatic
+    @BindingAdapter("urlRoundImage")
+    fun getRoundImageFromUrl(view: ImageView, url: String?) {
+        url?.let {
+            GlideImageLoader.loadRoundImage(url, view)
+        }
+    }
 }
