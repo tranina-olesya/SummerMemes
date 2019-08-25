@@ -18,4 +18,5 @@
     <string name="create_button">Создать</string>
     <string name="title_hint">Заголовок</string>
     <string name="text_hint">Текст</string>
+    <string name="meme_save_error">Не удалось сохранить мем</string>
 </resources>

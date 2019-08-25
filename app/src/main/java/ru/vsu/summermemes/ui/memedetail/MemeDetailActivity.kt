@@ -68,8 +68,9 @@ class MemeDetailActivity : AppCompatActivity() {
     }
 
     private fun downloadImage() {
-        meme?.let { meme ->
-            GlideImageLoader.loadImage(meme.photoUrl, meme_image)
+        val meme = meme ?: return
+        meme.photoUrl?.let {
+            GlideImageLoader.loadImage(it, meme_image)
         }
     }
 }

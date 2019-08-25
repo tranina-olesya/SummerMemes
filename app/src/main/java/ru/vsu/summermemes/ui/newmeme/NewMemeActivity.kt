@@ -1,28 +1,82 @@
 package ru.vsu.summermemes.ui.newmeme
 
+import android.app.Activity
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_new_meme.*
 import kotlinx.android.synthetic.main.toolbar_new_meme.*
 import ru.vsu.summermemes.R
 
-class NewMemeActivity : AppCompatActivity() {
+class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
+    companion object {
+        const val MAX_TITLE_LENGTH = 140
+        const val MAX_DESCRIPTION_LENGTH = 1000
+    }
+
+    @InjectPresenter
+    lateinit var presenter: NewMemePresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_meme)
+
         initUI()
     }
 
+    override fun showErrorSavingMeme() {
+        val snackbar = Snackbar.make(parent_view, R.string.meme_save_error, Snackbar.LENGTH_LONG)
+
+        snackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.error))
+        val textView =
+            snackbar.view.findViewById(com.google.android.material.R.id.snackbar_text) as? TextView
+        textView?.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+        snackbar.show()
+    }
+
+    override fun closeActivity() {
+        finish()
+    }
+
     private fun initUI() {
+        configureEditTexts()
+
         configureAddImageButton()
         configureCloseButton()
         configureDeleteImageButton()
+        configureCreateMemeButton()
+
+        configureHidingKeyboard()
+
         hideMemeImage()
         updateButtonEnabledState()
+    }
+
+    private fun configureHidingKeyboard() {
+        parent_view.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus)
+                hideKeyboard(view)
+        }
+    }
+
+    private fun hideKeyboard(view: View) {
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun configureEditTexts() {
+        meme_title_text_input_layout.counterMaxLength = MAX_TITLE_LENGTH
+        meme_description_text_input_layout.counterMaxLength = MAX_DESCRIPTION_LENGTH
         configureTitleEditText()
     }
 
@@ -41,7 +95,6 @@ class NewMemeActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 updateButtonEnabledState()
             }
-
         })
     }
 
@@ -70,6 +123,17 @@ class NewMemeActivity : AppCompatActivity() {
             meme_image.setImageDrawable(null)
             hideMemeImage()
             updateButtonEnabledState()
+        }
+    }
+
+    private fun configureCreateMemeButton() {
+        create_meme_button.setOnClickListener {
+            val title = meme_title_edit_text.text.toString()
+            val description = meme_description_edit_text.text.toString()
+            (meme_image.drawable as? BitmapDrawable)?.let {
+                val bitmap = it.bitmap
+                presenter.saveButtonPressed(title, description, bitmap)
+            }
         }
     }
 }
