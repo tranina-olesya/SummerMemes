@@ -25,12 +25,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/meme_title_text_input_layout"
                 style="@style/new_meme_text_input_layout"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="24dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="140"
+                app:counterOverflowTextAppearance="@style/text_limit_error"
+                app:counterTextAppearance="@style/text_limit">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/meme_title_edit_text"
                     style="@style/new_meme_edit_text"
-                    android:hint="@string/title"
+                    android:hint="@string/title_hint"
                     android:lineHeight="34dp"
                     android:textSize="24sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -38,18 +42,23 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/meme_description_text_input_layout"
                 style="@style/new_meme_text_input_layout"
-                android:layout_marginTop="@dimen/activity_vertical_margin">
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:counterEnabled="true"
+                app:counterMaxLength="1000"
+                app:counterOverflowTextAppearance="@style/text_limit_error"
+                app:counterTextAppearance="@style/text_limit">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/meme_description_edit_text"
                     style="@style/new_meme_edit_text"
-                    android:hint="@string/text"
+                    android:hint="@string/text_hint"
                     android:lineHeight="20dp"
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <FrameLayout
+                android:id="@+id/image_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -70,8 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/surf_edu" />
+                    android:scaleType="fitXY" />
             </FrameLayout>
         </LinearLayout>
     </ScrollView>

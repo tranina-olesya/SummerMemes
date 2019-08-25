@@ -65,4 +65,12 @@
         <item name="hintEnabled">false</item>
     </style>
 
+    <style name="text_limit_error" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/error</item>
+    </style>
+
+    <style name="text_limit" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/edit_text_hint</item>
+    </style>
+
 </resources>
