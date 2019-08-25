@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@color/background_2"
-    android:layout_height="@dimen/toolbar_height">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_main"
+    style="@style/toolbar_main"
+    app:popupTheme="@style/toolbar_popup">
 
     <LinearLayout
+        android:id="@+id/toolbar_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/toolbar_title"
-            android:layout_gravity="center"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/popular_memes" />
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/popular_memes"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/toolbar_search_button"
             android:layout_width="48dp"
-            android:layout_gravity="center"
             android:layout_height="48dp"
+            android:layout_gravity="center"
             android:background="?android:selectableItemBackgroundBorderless"
             android:src="@drawable/ic_search" />
     </LinearLayout>

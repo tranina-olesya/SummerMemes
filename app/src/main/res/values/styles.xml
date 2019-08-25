@@ -18,6 +18,7 @@
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/background_2</item>
         <item name="colorPrimaryDark">@color/background_2</item>
+        <item name="actionOverflowButtonStyle">@style/overflow_button_style</item>
     </style>
 
     <!-- TextFieldBoxes -->
@@ -80,6 +81,22 @@
         <item name="android:textColor">@drawable/create_meme_button_text_color</item>
         <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="toolbar_main">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/background_2</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:textColorSecondary">@color/active</item>
+    </style>
+
+    <style name="toolbar_popup">
+        <item name="android:colorBackground">@color/background_2</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="overflow_button_style" parent="android:Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_context_menu</item>
     </style>
 
 </resources>
