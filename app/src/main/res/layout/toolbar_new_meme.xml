@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    android:background="@color/background_2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/toolbar_close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_close" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/create_meme_button"
+            style="@style/button.simple"
+            android:layout_gravity="center"
+            android:text="@string/create_button"
+            android:enabled="false" />
+
+    </LinearLayout>
+</androidx.appcompat.widget.Toolbar>

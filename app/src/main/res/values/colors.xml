@@ -14,8 +14,11 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="bottom_nav_background">#12102B</color>
-    <color name="clear">#00000000 </color>
+    <color name="clear">#00000000</color>
     <color name="feed_loading_error_text">#9FACC7</color>
     <color name="meme_detail_date_text">#CCFFFFFF</color>
     <color name="progress_view_background">#99000000</color>
+    <color name="edit_text_hint">#80FFFFFF</color>
+    <color name="close_image_background">#CC000000</color>
+    <color name="active_disabled">#4D1EF0D7</color>
 </resources>

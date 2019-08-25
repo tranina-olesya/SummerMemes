@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".ui.newmeme.NewMemeActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_new_meme" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/meme_title_text_input_layout"
+                style="@style/new_meme_text_input_layout"
+                android:layout_marginTop="24dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="140"
+                app:counterOverflowTextAppearance="@style/text_limit_error"
+                app:counterTextAppearance="@style/text_limit">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/meme_title_edit_text"
+                    style="@style/new_meme_edit_text"
+                    android:hint="@string/title_hint"
+                    android:lineHeight="34dp"
+                    android:textSize="24sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/meme_description_text_input_layout"
+                style="@style/new_meme_text_input_layout"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:counterEnabled="true"
+                app:counterMaxLength="1000"
+                app:counterOverflowTextAppearance="@style/text_limit_error"
+                app:counterTextAppearance="@style/text_limit">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/meme_description_edit_text"
+                    style="@style/new_meme_edit_text"
+                    android:hint="@string/text_hint"
+                    android:minHeight="50dp"
+                    android:lineHeight="20dp"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <FrameLayout
+                android:id="@+id/image_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+                <ImageButton
+                    android:id="@+id/delete_image"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="end|top"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/close_image_background"
+                    android:src="@drawable/ic_close" />
+
+                <ImageView
+                    android:id="@+id/meme_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY" />
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/add_image_button"
+        android:layout_width="@dimen/add_image_button_size"
+        android:layout_height="@dimen/add_image_button_size"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/add_image_button_background"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_attach"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

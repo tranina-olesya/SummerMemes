@@ -14,4 +14,12 @@
     <string name="day_form_3">дней</string>
     <string name="days_ago">назад</string>
     <string name="refresh_memes_error">Отсутствует интернет-соединение \nПопробуйте позже</string>
+    <string name="title_activity_new_meme">NewMemeActivity</string>
+    <string name="create_button">Создать</string>
+    <string name="title_hint">Заголовок</string>
+    <string name="text_hint">Текст</string>
+    <string name="meme_save_error">Не удалось сохранить мем</string>
+    <string name="choose_photo">Выбрать фото</string>
+    <string name="from_gallery">Из галереи</string>
+    <string name="make_photo">Сделать фото</string>
 </resources>

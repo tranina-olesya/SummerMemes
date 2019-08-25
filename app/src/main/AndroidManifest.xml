@@ -13,6 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.newmeme.NewMemeActivity"
+            android:label="@string/title_activity_new_meme"
+            android:theme="@style/AppTheme.Toolbar"/>
+        <activity
             android:name=".ui.memedetail.MemeDetailActivity"
             android:theme="@style/AppTheme.Toolbar" />
         <activity

@@ -10,9 +10,9 @@ import kotlinx.android.synthetic.main.toolbar_meme_detail_activity.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.databinding.ActivityMemeDetailBinding
 import ru.vsu.summermemes.models.meme.MemeEntry
-import ru.vsu.summermemes.utils.BitmapConvertHelper
-import ru.vsu.summermemes.utils.DateConvertHelper
-import ru.vsu.summermemes.utils.GlideImageLoader
+import ru.vsu.summermemes.utils.image.BitmapConvertHelper
+import ru.vsu.summermemes.utils.date.DateConvertHelper
+import ru.vsu.summermemes.utils.image.GlideImageLoader
 
 class MemeDetailActivity : AppCompatActivity() {
 
@@ -68,8 +68,9 @@ class MemeDetailActivity : AppCompatActivity() {
     }
 
     private fun downloadImage() {
-        meme?.let { meme ->
-            GlideImageLoader.loadImage(meme.photoUrl, meme_image)
+        val meme = meme ?: return
+        meme.photoUrl?.let {
+            GlideImageLoader.loadImage(it, meme_image)
         }
     }
 }

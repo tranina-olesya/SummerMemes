@@ -1,5 +1,6 @@
 package ru.vsu.summermemes.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -9,23 +10,19 @@ import ru.vsu.summermemes.R
 import ru.vsu.summermemes.ui.main.fragments.addmeme.AddMemeFragment
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 import ru.vsu.summermemes.ui.main.fragments.profile.ProfileFragment
+import ru.vsu.summermemes.ui.newmeme.NewMemeActivity
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
         const val FEED_TAG = "FEED"
         const val PROFILE_TAG = "PROFILE"
-        const val ADD_TAG = "ADD"
     }
 
     private lateinit var fragmentManager: FragmentManager
 
     private val feedFragment by lazy {
         FeedFragment()
-    }
-
-    private val addMemeFragment by lazy {
-        AddMemeFragment()
     }
 
     private val profileFragment by lazy {
@@ -53,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigation_add -> {
-                    showFragment(addMemeFragment, ADD_TAG)
+                    openNewMemeActivity()
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
@@ -65,6 +62,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         main_bottom_nav_menu.selectedItemId = R.id.navigation_feed
+    }
+
+    private fun openNewMemeActivity() {
+        val intent = Intent(this, NewMemeActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showFragment(fragment: Fragment, tag: String) {

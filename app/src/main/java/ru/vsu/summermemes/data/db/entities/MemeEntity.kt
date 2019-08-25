@@ -1,5 +1,6 @@
 package ru.vsu.summermemes.data.db.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,6 +11,9 @@ class MemeEntity {
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null
 
-    @Embedded(prefix = "meme_")
+    @ColumnInfo(name = "image_path")
+    lateinit var imagePath: String
+
+    @Embedded
     lateinit var meme: MemeEntry
 }

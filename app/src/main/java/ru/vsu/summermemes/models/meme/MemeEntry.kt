@@ -7,7 +7,7 @@ import java.io.Serializable
 data class MemeEntry(
     @SerializedName("id")
     @ColumnInfo(name = "api_id")
-    val apiId: Long,
+    val apiId: Long?,
     @ColumnInfo(name = "title")
     @SerializedName("title")
     val title: String,
@@ -22,5 +22,5 @@ data class MemeEntry(
     val createdDate: Long,
     @ColumnInfo(name = "photoUtl")
     @SerializedName("photoUtl")
-    val photoUrl: String
+    val photoUrl: String?
 ) : Serializable

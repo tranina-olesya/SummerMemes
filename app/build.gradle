@@ -64,8 +64,8 @@ dependencies {
     // Moxy
     implementation 'com.arello-mobile:moxy:1.5.5'
     implementation 'com.arello-mobile:moxy-android:1.5.5'
-    implementation ('tech.schoolhelper:moxy-x-androidx:1.7.0') {
-        exclude group: 'tech.schoolhelper', module:'moxy-x'
+    implementation('tech.schoolhelper:moxy-x-androidx:1.7.0') {
+        exclude group: 'tech.schoolhelper', module: 'moxy-x'
     }
     kapt 'com.arello-mobile:moxy-compiler:1.5.5'
 
