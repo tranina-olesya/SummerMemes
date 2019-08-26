@@ -1,52 +1,60 @@
 package ru.vsu.summermemes.api
 
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.vsu.summermemes.BuildConfig
+import ru.vsu.summermemes.api.interceptors.AuthInterceptor
 import ru.vsu.summermemes.api.interfaces.AuthAPI
 import ru.vsu.summermemes.api.interfaces.MemeAPI
+import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
 
 
 object NetworkService {
     private const val BASE_URL = "https://demo3161256.mockable.io"
 
-    val authAPI by lazy {
-        createAuthAPI(buildRetrofit(buildOkHttp()))
+    const val AUTH_HEADER = "Authorization"
+
+    val accessToken: String?
+        get() {
+            return UserRepository().getAccessToken()
+        }
+
+    fun buildOkHttp(): OkHttpClient {
+        val interceptors = mutableListOf<Interceptor>()
+        if (BuildConfig.DEBUG) {
+            val httpLoggingInterceptor =
+                HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
+            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            interceptors.add(httpLoggingInterceptor)
+        }
+        return buildOkHttpWithInterceptors(interceptors)
     }
 
-    val memeAPI by lazy {
-        createMemeAPI(buildRetrofit(buildOkHttp()))
+    fun buildOkHttpWithAuth(): OkHttpClient {
+        val interceptors = mutableListOf<Interceptor>()
+        interceptors.add(AuthInterceptor())
+        return buildOkHttpWithInterceptors(interceptors)
     }
 
-    private fun buildOkHttp(): OkHttpClient {
+    fun buildRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+    }
+
+    private fun buildOkHttpWithInterceptors(interceptors: List<Interceptor>): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
-        val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
-        if (BuildConfig.DEBUG) {
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            builder.networkInterceptors().add(httpLoggingInterceptor)
+        for (interceptor in interceptors) {
+            builder.networkInterceptors().add(interceptor)
         }
         return builder.build()
-
-    }
-
-    private fun buildRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-    }
-
-    private fun createAuthAPI(retrofit: Retrofit): AuthAPI {
-        return retrofit.create(AuthAPI::class.java)
-    }
-
-    private fun createMemeAPI(retrofit: Retrofit): MemeAPI {
-        return retrofit.create(MemeAPI::class.java)
     }
 }

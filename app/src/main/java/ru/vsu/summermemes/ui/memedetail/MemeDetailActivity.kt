@@ -68,8 +68,11 @@ class MemeDetailActivity : AppCompatActivity() {
     }
 
     private fun downloadImage() {
-//        memeEntity?.meme?.photoUrl?.let {
-//            GlideImageLoader.loadImage(it, meme_image)
-//        }
+        memeEntity?.meme?.photoUrl?.let {
+            GlideImageLoader.loadImage(it, meme_image)
+        }
+        memeEntity?.imagePath?.let {
+            GlideImageLoader.loadImageFromFiles(it, meme_image)
+        }
     }
 }
