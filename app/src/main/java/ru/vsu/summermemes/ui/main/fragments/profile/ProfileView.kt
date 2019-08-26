@@ -2,6 +2,7 @@ package ru.vsu.summermemes.ui.main.fragments.profile
 
 import com.arellomobile.mvp.MvpView
 import ru.vsu.summermemes.data.db.entities.MemeEntity
+import ru.vsu.summermemes.models.meme.MemeEntry
 
 interface ProfileView : MvpView {
     fun showMemes(memeEntities: List<MemeEntity>)
@@ -13,4 +14,6 @@ interface ProfileView : MvpView {
     fun showLoading()
 
     fun hideLoading()
+
+    fun openMemeDetailActivity(meme: MemeEntity, byteArray: ByteArray?)
 }

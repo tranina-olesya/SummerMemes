@@ -84,7 +84,7 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
         }
     }
 
-    override fun openMemeDetailActivity(meme: MemeEntry, byteArray: ByteArray?) {
+    override fun openMemeDetailActivity(meme: MemeEntity, byteArray: ByteArray?) {
         activity?.apply {
             val intent = Intent(this, MemeDetailActivity::class.java)
             intent.putExtra(MemeDetailActivity.MEME_EXTRA, meme)

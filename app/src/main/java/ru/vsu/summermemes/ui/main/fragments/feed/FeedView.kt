@@ -2,9 +2,8 @@ package ru.vsu.summermemes.ui.main.fragments.feed
 
 import com.arellomobile.mvp.MvpView
 import ru.vsu.summermemes.data.db.entities.MemeEntity
-import ru.vsu.summermemes.models.meme.MemeEntry
 
-interface FeedView: MvpView {
+interface FeedView : MvpView {
     fun showMemesList(memes: List<MemeEntity>)
 
     fun hideMemesList()
@@ -19,5 +18,5 @@ interface FeedView: MvpView {
 
     fun hideLoading()
 
-    fun openMemeDetailActivity(meme: MemeEntry, byteArray: ByteArray?)
+    fun openMemeDetailActivity(meme: MemeEntity, byteArray: ByteArray?)
 }

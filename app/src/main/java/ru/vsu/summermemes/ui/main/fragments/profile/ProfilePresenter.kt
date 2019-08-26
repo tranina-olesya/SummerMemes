@@ -7,6 +7,7 @@ import io.reactivex.disposables.Disposable
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.data.db.repositories.LocalMemeRepository
 import ru.vsu.summermemes.ui.main.base.MemeListPresenter
+import ru.vsu.summermemes.utils.extensions.convertToByteArray
 
 @InjectViewState
 class ProfilePresenter : MvpPresenter<ProfileView>(), MemeListPresenter {
@@ -34,10 +35,6 @@ class ProfilePresenter : MvpPresenter<ProfileView>(), MemeListPresenter {
     }
 
     override fun memeChosen(memeEntity: MemeEntity, bitmap: Bitmap?) {
-
-    }
-
-    fun updateMemes() {
-        loadMemes()
+        viewState.openMemeDetailActivity(memeEntity, bitmap?.convertToByteArray())
     }
 }

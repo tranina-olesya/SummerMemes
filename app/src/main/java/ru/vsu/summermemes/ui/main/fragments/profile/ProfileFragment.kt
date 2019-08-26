@@ -1,6 +1,7 @@
 package ru.vsu.summermemes.ui.main.fragments.profile
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +15,10 @@ import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
 import ru.vsu.summermemes.databinding.FragmentProfileBinding
+import ru.vsu.summermemes.models.meme.MemeEntry
 import ru.vsu.summermemes.ui.main.base.FeedAdapter
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
+import ru.vsu.summermemes.ui.memedetail.MemeDetailActivity
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
@@ -100,7 +103,12 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         progress_bar.visibility = View.GONE
     }
 
-    fun memeChosen(memeEntity: MemeEntity) {
-
+    override fun openMemeDetailActivity(meme: MemeEntity, byteArray: ByteArray?) {
+        activity?.apply {
+            val intent = Intent(this, MemeDetailActivity::class.java)
+            intent.putExtra(MemeDetailActivity.MEME_EXTRA, meme)
+            intent.putExtra(MemeDetailActivity.IMAGE_MEME_EXTRA, byteArray)
+            startActivity(intent)
+        }
     }
 }

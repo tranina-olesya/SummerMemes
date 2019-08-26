@@ -55,6 +55,6 @@ class FeedPresenter : MvpPresenter<FeedView>(), MemeListPresenter {
 
 
     override fun memeChosen(memeEntity: MemeEntity, bitmap: Bitmap?) {
-        viewState.openMemeDetailActivity(memeEntity.meme, bitmap?.convertToByteArray())
+        viewState.openMemeDetailActivity(memeEntity, bitmap?.convertToByteArray())
     }
 }

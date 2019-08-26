@@ -39,7 +39,7 @@ class FeedAdapter(context: Context, var presenter: MemeListPresenter? = null) :
     class MemeViewHolder(val binding: MemeItemBinding, var presenter: MemeListPresenter? = null) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(memeEntity: MemeEntity) {
-            binding.memeEntry = memeEntity
+            binding.memeEntity = memeEntity
             binding.root.setOnClickListener {
                 val bitmap = (binding.root.meme_image.drawable as? BitmapDrawable)?.bitmap
                 presenter?.memeChosen(memeEntity, bitmap)

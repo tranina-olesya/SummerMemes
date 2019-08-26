@@ -5,9 +5,10 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.vsu.summermemes.models.meme.MemeEntry
+import java.io.Serializable
 
 @Entity(tableName = "memes")
-class MemeEntity {
+class MemeEntity : Serializable {
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null
 
