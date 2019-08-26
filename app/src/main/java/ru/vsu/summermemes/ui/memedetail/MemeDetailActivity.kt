@@ -1,17 +1,17 @@
 package ru.vsu.summermemes.ui.memedetail
 
-import androidx.databinding.DataBindingUtil
 import android.graphics.Bitmap
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import kotlinx.android.synthetic.main.activity_meme_detail.*
 import kotlinx.android.synthetic.main.toolbar_meme_detail_activity.*
 import ru.vsu.summermemes.R
+import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.ActivityMemeDetailBinding
-import ru.vsu.summermemes.models.meme.MemeEntry
-import ru.vsu.summermemes.utils.image.BitmapConvertHelper
 import ru.vsu.summermemes.utils.date.DateConvertHelper
+import ru.vsu.summermemes.utils.image.BitmapConvertHelper
 import ru.vsu.summermemes.utils.image.GlideImageLoader
 
 class MemeDetailActivity : AppCompatActivity() {
@@ -21,7 +21,7 @@ class MemeDetailActivity : AppCompatActivity() {
         const val IMAGE_MEME_EXTRA = "IMAGE_BITMAP"
     }
 
-    var meme: MemeEntry? = null
+    var memeEntity: MemeEntity? = null
     var imageBitmap: Bitmap? = null
 
     private lateinit var binding: ActivityMemeDetailBinding
@@ -30,7 +30,7 @@ class MemeDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_meme_detail)
 
-        meme = (intent.getSerializableExtra(MEME_EXTRA)) as? MemeEntry
+        memeEntity = (intent.getSerializableExtra(MEME_EXTRA)) as? MemeEntity
         val imageByteArray = (intent.getSerializableExtra(IMAGE_MEME_EXTRA)) as? ByteArray
         imageByteArray?.let {
             imageBitmap = BitmapConvertHelper.getBitmapFromByteArray(imageByteArray)
@@ -40,12 +40,12 @@ class MemeDetailActivity : AppCompatActivity() {
 
     private fun initUI() {
         configureCloseButton()
-        meme?.let { meme ->
-            binding.meme = meme
-            if (meme.description.isEmpty()) {
+        memeEntity?.let { memeEntity ->
+            binding.memeEntity = memeEntity
+            if (memeEntity.meme.description.isEmpty()) {
                 hideDescription()
             }
-            meme_date_created.text = DateConvertHelper.getDaysAgoCreated(meme.createdDate)
+            meme_date_created.text = DateConvertHelper.getDaysAgoCreated(memeEntity.meme.createdDate)
             setMemeImage()
         }
     }
@@ -68,9 +68,8 @@ class MemeDetailActivity : AppCompatActivity() {
     }
 
     private fun downloadImage() {
-        val meme = meme ?: return
-        meme.photoUrl?.let {
-            GlideImageLoader.loadImage(it, meme_image)
-        }
+//        memeEntity?.meme?.photoUrl?.let {
+//            GlideImageLoader.loadImage(it, meme_image)
+//        }
     }
 }

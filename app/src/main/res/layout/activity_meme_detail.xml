@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="meme"
-            type="ru.vsu.summermemes.models.meme.MemeEntry" />
+            name="memeEntity"
+            type="ru.vsu.summermemes.data.db.entities.MemeEntity" />
 
         <variable
             name="image"
@@ -23,7 +23,7 @@
 
         <include
             layout="@layout/toolbar_meme_detail_activity"
-            app:meme="@{ meme }" />
+            app:meme="@{ memeEntity.meme }" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:lineHeight="31dp"
-                    android:text="@{ meme.title }"
+                    android:text="@{ memeEntity.meme.title }"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
 
@@ -49,6 +49,8 @@
                     android:id="@+id/meme_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    uri="@{ memeEntity.imagePath }"
+                    url="@{ memeEntity.meme.photoUrl }"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY" />
 
@@ -78,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?android:selectableItemBackgroundBorderless"
-                        android:src="@{ meme.isFavorite ? @drawable/ic_favorite : @drawable/ic_favorite_empty}" />
+                        android:src="@{ memeEntity.meme.isFavorite ? @drawable/ic_favorite : @drawable/ic_favorite_empty}" />
                 </LinearLayout>
 
                 <TextView
@@ -89,7 +91,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="10dp"
                     android:lineHeight="20dp"
-                    android:text="@{ meme.description }"
+                    android:text="@{ memeEntity.meme.description }"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 

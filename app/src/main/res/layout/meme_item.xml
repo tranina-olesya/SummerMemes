@@ -4,8 +4,8 @@
     <data>
 
         <variable
-            name="meme"
-            type="ru.vsu.summermemes.models.meme.MemeEntry" />
+            name="memeEntity"
+            type="ru.vsu.summermemes.data.db.entities.MemeEntity" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,7 +31,8 @@
 
                 <ImageView
                     android:id="@+id/meme_image"
-                    url="@{ meme.photoUrl }"
+                    uri="@{ memeEntity.imagePath }"
+                    url="@{ memeEntity.meme.photoUrl }"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -49,7 +50,7 @@
                     android:ellipsize="end"
                     android:fontFamily="sans-serif-medium"
                     android:maxLines="1"
-                    android:text="@{ meme.title }"
+                    android:text="@{ memeEntity.meme.title }"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -65,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:background="?android:selectableItemBackgroundBorderless"
-                        android:src="@{ meme.isFavorite ? @drawable/ic_favorite : @drawable/ic_favorite_empty}" />
+                        android:src="@{ memeEntity.meme.isFavorite ? @drawable/ic_favorite : @drawable/ic_favorite_empty}" />
 
                     <ImageButton
                         android:id="@+id/share_button"
