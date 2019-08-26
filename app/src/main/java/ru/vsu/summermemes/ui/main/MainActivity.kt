@@ -1,31 +1,32 @@
 package ru.vsu.summermemes.ui.main
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_new_meme.*
 import kotlinx.android.synthetic.main.toolbar_main_activity.*
 import ru.vsu.summermemes.R
-import ru.vsu.summermemes.api.NetworkService
-import ru.vsu.summermemes.api.repositories.AuthRepository
-import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
+import ru.vsu.summermemes.ui.auth.AuthActivity
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 import ru.vsu.summermemes.ui.main.fragments.profile.ProfileFragment
 import ru.vsu.summermemes.ui.newmeme.NewMemeActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : MvpAppCompatActivity(), MainView {
 
     companion object {
         const val FEED_TAG = "FEED"
         const val PROFILE_TAG = "PROFILE"
     }
+
+    @InjectPresenter
+    lateinit var presenter: MainPresenter
 
     private lateinit var fragmentManager: FragmentManager
 
@@ -39,12 +40,32 @@ class MainActivity : AppCompatActivity() {
 
     private var lastFragment: Fragment? = null
 
+    private lateinit var dialog: AlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(findViewById(R.id.toolbar_main))
         setContentView(R.layout.activity_main)
         configureFragmentManager()
         configureFragmentNavigation()
+        configureLogoutDialog()
+        configureToolBar()
+    }
+
+    private fun configureToolBar() {
+        toolbar_main.setOnMenuItemClickListener { item ->
+            when (item?.itemId) {
+                R.id.logout -> dialog.show()
+            }
+            return@setOnMenuItemClickListener false
+        }
+    }
+
+    override fun openAuthScreen() {
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
+        onBackPressed()
+        finish()
     }
 
     private fun configureFragmentManager() {
@@ -105,5 +126,18 @@ class MainActivity : AppCompatActivity() {
         lastFragment = fragment
 
         fragmentTransaction.commit()
+    }
+
+    private fun configureLogoutDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.logout_message)
+        builder.setPositiveButton(R.string.logout) { dialog, which ->
+            presenter.logout()
+        }
+        builder.setNegativeButton(R.string.cancel) { dialog, which ->
+            dialog.cancel()
+        }
+
+        dialog = builder.create()
     }
 }
