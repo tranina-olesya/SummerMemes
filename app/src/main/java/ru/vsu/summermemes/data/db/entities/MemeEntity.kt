@@ -12,7 +12,7 @@ class MemeEntity {
     var id: Long? = null
 
     @ColumnInfo(name = "image_path")
-    lateinit var imagePath: String
+    var imagePath: String? = null
 
     @Embedded
     lateinit var meme: MemeEntry

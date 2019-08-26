@@ -1,4 +1,4 @@
-package ru.vsu.summermemes.ui.main.fragments.feed
+package ru.vsu.summermemes.ui.main.base
 
 import android.content.Context
 import androidx.databinding.DataBindingUtil
@@ -8,15 +8,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.meme_item.view.*
 import ru.vsu.summermemes.R
+import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.MemeItemBinding
 import ru.vsu.summermemes.models.meme.MemeEntry
+import ru.vsu.summermemes.ui.main.fragments.feed.FeedPresenter
 
-class FeedAdapter(context: Context, val presenter: FeedPresenter) :
+class FeedAdapter(context: Context, var presenter: MemeListPresenter? = null) :
     RecyclerView.Adapter<FeedAdapter.MemeViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
 
-    var memeList = listOf<MemeEntry>()
+    var memeList = listOf<MemeEntity>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -34,13 +36,13 @@ class FeedAdapter(context: Context, val presenter: FeedPresenter) :
         viewHolder.bind(memeList[position])
     }
 
-    class MemeViewHolder(val binding: MemeItemBinding, val presenter: FeedPresenter) : RecyclerView.ViewHolder(binding.root) {
+    class MemeViewHolder(val binding: MemeItemBinding, var presenter: MemeListPresenter? = null) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(meme: MemeEntry) {
-            binding.meme = meme
+        fun bind(memeEntity: MemeEntity) {
+            binding.memeEntry = memeEntity
             binding.root.setOnClickListener {
                 val bitmap = (binding.root.meme_image.drawable as? BitmapDrawable)?.bitmap
-                presenter.memeChosen(meme, bitmap)
+                presenter?.memeChosen(memeEntity, bitmap)
             }
         }
     }
