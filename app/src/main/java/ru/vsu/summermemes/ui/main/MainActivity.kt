@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.toolbar_main_activity.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.api.NetworkService
 import ru.vsu.summermemes.api.repositories.AuthRepository
+import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 import ru.vsu.summermemes.ui.main.fragments.profile.ProfileFragment
 import ru.vsu.summermemes.ui.newmeme.NewMemeActivity
