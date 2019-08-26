@@ -6,10 +6,15 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_new_meme.*
 import kotlinx.android.synthetic.main.toolbar_main_activity.*
 import ru.vsu.summermemes.R
+import ru.vsu.summermemes.api.NetworkService
+import ru.vsu.summermemes.api.repositories.AuthRepository
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 import ru.vsu.summermemes.ui.main.fragments.profile.ProfileFragment
 import ru.vsu.summermemes.ui.newmeme.NewMemeActivity
