@@ -11,7 +11,7 @@ open class MemeListPresenter<V : MemeListView> : BasePresenter<V>() {
         viewState.openMemeDetailActivity(memeEntity, bitmap, imageView)
     }
 
-    fun favoriteButtonPressed(meme: MemeEntity, position: Int) {
+    open fun favoriteButtonPressed(meme: MemeEntity, position: Int) {
         meme.meme.isFavorite = !meme.meme.isFavorite
         viewState.updateElement(meme, position)
     }

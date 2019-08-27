@@ -41,7 +41,7 @@ class FeedFragment : MemeListFragment(), FeedView {
         recycler_view.visibility = View.VISIBLE
 
         feedAdapter ?: configureRecyclerView()
-        feedAdapter?.memeList = memes
+        feedAdapter?.memeList = memes.toMutableList()
     }
 
     override fun hideMemesList() {
@@ -69,7 +69,7 @@ class FeedFragment : MemeListFragment(), FeedView {
     }
 
     override fun updateElement(meme: MemeEntity, position: Int) {
-        feedAdapter?.updateMemeItem(meme, position)
+        feedAdapter?.updateMemeFavorite(meme, position)
     }
 
     private fun initUI() {
