@@ -1,6 +1,7 @@
 package ru.vsu.summermemes.ui.main.fragments.base
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +12,10 @@ import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.MemeItemBinding
 
-class FeedAdapter(context: Context) :
+class FeedAdapter(
+    context: Context,
+    val onClickListener: (element: MemeEntity, bitmap: Bitmap?) -> Unit
+) :
     RecyclerView.Adapter<FeedAdapter.MemeViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
@@ -34,14 +38,14 @@ class FeedAdapter(context: Context) :
         viewHolder.bind(memeList[position])
     }
 
-    class MemeViewHolder(val binding: MemeItemBinding) :
+    inner class MemeViewHolder(val binding: MemeItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(memeEntity: MemeEntity) {
             binding.memeEntity = memeEntity
             binding.root.setOnClickListener {
                 val bitmap = (binding.root.meme_image.drawable as? BitmapDrawable)?.bitmap
-//                presenter?.memeChosen(memeEntity, bitmap)
+                onClickListener.invoke(memeEntity, bitmap)
             }
         }
     }

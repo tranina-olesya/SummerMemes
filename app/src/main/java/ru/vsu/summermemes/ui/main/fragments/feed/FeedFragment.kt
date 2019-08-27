@@ -1,6 +1,7 @@
 package ru.vsu.summermemes.ui.main.fragments.feed
 
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -78,7 +79,9 @@ class FeedFragment : MemeListFragment(), FeedView {
 
     private fun configureRecyclerView() {
         activity?.let {
-            feedAdapter = FeedAdapter(it)
+            feedAdapter = FeedAdapter(it) { memeEntity, bitmap ->
+                presenter.memeChosen(memeEntity, bitmap)
+            }
             val layoutManager =
                 androidx.recyclerview.widget.StaggeredGridLayoutManager(
                     COLUMNS_COUNT,

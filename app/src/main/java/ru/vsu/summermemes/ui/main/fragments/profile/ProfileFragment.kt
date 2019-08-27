@@ -64,7 +64,9 @@ class ProfileFragment : MemeListFragment(), ProfileView {
 
     private fun configureRecyclerView() {
         activity?.let {
-            feedAdapter = FeedAdapter(it)
+            feedAdapter = FeedAdapter(it) { memeEntity, bitmap ->
+                presenter.memeChosen(memeEntity, bitmap)
+            }
             val layoutManager =
                 androidx.recyclerview.widget.StaggeredGridLayoutManager(
                     FeedFragment.COLUMNS_COUNT,

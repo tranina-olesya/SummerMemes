@@ -1,6 +1,7 @@
 package ru.vsu.summermemes.ui.main.fragments.base
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -9,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.ui.memedetail.MemeDetailActivity
+import ru.vsu.summermemes.utils.image.TmpImageStorage
 
 abstract class MemeListFragment: MvpAppCompatFragment(), MemeListView {
 
@@ -26,11 +28,11 @@ abstract class MemeListFragment: MvpAppCompatFragment(), MemeListView {
         }
     }
 
-    override fun openMemeDetailActivity(meme: MemeEntity, byteArray: ByteArray?) {
+    override fun openMemeDetailActivity(meme: MemeEntity, bitmap: Bitmap?) {
         activity?.apply {
             val intent = Intent(this, MemeDetailActivity::class.java)
             intent.putExtra(MemeDetailActivity.MEME_EXTRA, meme)
-            intent.putExtra(MemeDetailActivity.IMAGE_MEME_EXTRA, byteArray)
+            TmpImageStorage.image = bitmap
             startActivity(intent)
         }
     }
