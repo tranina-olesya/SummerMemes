@@ -64,9 +64,12 @@ class ProfileFragment : MemeListFragment(), ProfileView {
 
     private fun configureRecyclerView() {
         activity?.let {
-            feedAdapter = FeedAdapter(it) { memeEntity, bitmap ->
-                presenter.memeChosen(memeEntity, bitmap)
-            }
+            feedAdapter = FeedAdapter(it,
+                { memeEntity, bitmap, imageView ->
+                    presenter.memeChosen(memeEntity, bitmap, imageView)
+                }, { meme, position ->
+                    presenter.favoriteButtonPressed(meme, position)
+                })
             val layoutManager =
                 androidx.recyclerview.widget.StaggeredGridLayoutManager(
                     FeedFragment.COLUMNS_COUNT,
@@ -96,4 +99,9 @@ class ProfileFragment : MemeListFragment(), ProfileView {
     override fun hideLoading() {
         progress_bar.visibility = View.GONE
     }
+
+    override fun updateElement(meme: MemeEntity, position: Int) {
+        feedAdapter?.notifyItemChanged(position)
+    }
+
 }

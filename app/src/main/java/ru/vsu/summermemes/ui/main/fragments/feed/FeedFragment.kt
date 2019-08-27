@@ -1,7 +1,6 @@
 package ru.vsu.summermemes.ui.main.fragments.feed
 
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -69,6 +68,10 @@ class FeedFragment : MemeListFragment(), FeedView {
         showLoadingErrorOnTopOfContent(parent_view)
     }
 
+    override fun updateElement(meme: MemeEntity, position: Int) {
+        feedAdapter?.updateMemeItem(meme, position)
+    }
+
     private fun initUI() {
         configureRecyclerView()
         configureSwipeRefreshLayout()
@@ -79,9 +82,12 @@ class FeedFragment : MemeListFragment(), FeedView {
 
     private fun configureRecyclerView() {
         activity?.let {
-            feedAdapter = FeedAdapter(it) { memeEntity, bitmap ->
-                presenter.memeChosen(memeEntity, bitmap)
-            }
+            feedAdapter = FeedAdapter(it,
+                { memeEntity, bitmap, imageView ->
+                    presenter.memeChosen(memeEntity, bitmap, imageView)
+                }, { meme, position ->
+                    presenter.favoriteButtonPressed(meme, position)
+                })
             val layoutManager =
                 androidx.recyclerview.widget.StaggeredGridLayoutManager(
                     COLUMNS_COUNT,
@@ -89,6 +95,7 @@ class FeedFragment : MemeListFragment(), FeedView {
                 )
             recycler_view.layoutManager = layoutManager
             recycler_view.adapter = feedAdapter
+            recycler_view.itemAnimator?.changeDuration = 0
         }
     }
 

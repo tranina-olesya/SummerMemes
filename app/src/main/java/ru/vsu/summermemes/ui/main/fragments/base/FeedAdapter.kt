@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.meme_item.view.*
@@ -14,9 +15,9 @@ import ru.vsu.summermemes.databinding.MemeItemBinding
 
 class FeedAdapter(
     context: Context,
-    val onClickListener: (element: MemeEntity, bitmap: Bitmap?) -> Unit
-) :
-    RecyclerView.Adapter<FeedAdapter.MemeViewHolder>() {
+    val onClickListener: (element: MemeEntity, bitmap: Bitmap?, imageView: ImageView) -> Unit,
+    val onFavoriteClickListener: (element: MemeEntity, position: Int) -> Unit
+) : RecyclerView.Adapter<FeedAdapter.MemeViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
 
@@ -35,17 +36,28 @@ class FeedAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: MemeViewHolder, position: Int) {
-        viewHolder.bind(memeList[position])
+        viewHolder.bind(memeList[position], position)
+    }
+
+    fun updateMemeItem(memeEntity: MemeEntity, position: Int) {
+        val oldValue = memeList[position]
+        oldValue.meme.isFavorite = memeEntity.meme.isFavorite
+        notifyItemChanged(position)
     }
 
     inner class MemeViewHolder(val binding: MemeItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(memeEntity: MemeEntity) {
+        fun bind(memeEntity: MemeEntity, position: Int) {
             binding.memeEntity = memeEntity
+
             binding.root.setOnClickListener {
                 val bitmap = (binding.root.meme_image.drawable as? BitmapDrawable)?.bitmap
-                onClickListener.invoke(memeEntity, bitmap)
+                onClickListener.invoke(memeEntity, bitmap, binding.memeImage)
+            }
+
+            binding.favoriteButton.setOnClickListener {
+                onFavoriteClickListener.invoke(memeEntity, position)
             }
         }
     }
