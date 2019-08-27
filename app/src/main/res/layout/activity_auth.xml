@@ -58,6 +58,7 @@
         <Button
             android:id="@+id/auth_button"
             style="@style/button"
+            android:background="@drawable/auth_button_background"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:text="@string/auth_button" />

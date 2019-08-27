@@ -1,19 +1,21 @@
-package ru.vsu.summermemes.ui.main.base
+package ru.vsu.summermemes.ui.main.fragments.base
 
 import android.content.Context
-import androidx.databinding.DataBindingUtil
+import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.meme_item.view.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.MemeItemBinding
-import ru.vsu.summermemes.models.meme.MemeEntry
-import ru.vsu.summermemes.ui.main.fragments.feed.FeedPresenter
 
-class FeedAdapter(context: Context, var presenter: MemeListPresenter? = null) :
+class FeedAdapter(
+    context: Context,
+    val onClickListener: (element: MemeEntity, bitmap: Bitmap?) -> Unit
+) :
     RecyclerView.Adapter<FeedAdapter.MemeViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
@@ -29,20 +31,21 @@ class FeedAdapter(context: Context, var presenter: MemeListPresenter? = null) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): MemeViewHolder {
         val binding =
             DataBindingUtil.inflate<MemeItemBinding>(inflater, R.layout.meme_item, viewGroup, false)
-        return MemeViewHolder(binding, presenter)
+        return MemeViewHolder(binding)
     }
 
     override fun onBindViewHolder(viewHolder: MemeViewHolder, position: Int) {
         viewHolder.bind(memeList[position])
     }
 
-    class MemeViewHolder(val binding: MemeItemBinding, var presenter: MemeListPresenter? = null) : RecyclerView.ViewHolder(binding.root) {
+    inner class MemeViewHolder(val binding: MemeItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(memeEntity: MemeEntity) {
             binding.memeEntity = memeEntity
             binding.root.setOnClickListener {
                 val bitmap = (binding.root.meme_image.drawable as? BitmapDrawable)?.bitmap
-                presenter?.memeChosen(memeEntity, bitmap)
+                onClickListener.invoke(memeEntity, bitmap)
             }
         }
     }

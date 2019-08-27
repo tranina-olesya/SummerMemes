@@ -23,6 +23,7 @@
             android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.Toolbar" />
         <activity
+            android:windowSoftInputMode="adjustResize"
             android:name=".ui.auth.AuthActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

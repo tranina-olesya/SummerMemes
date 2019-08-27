@@ -11,8 +11,8 @@ import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.ActivityMemeDetailBinding
 import ru.vsu.summermemes.utils.date.DateConvertHelper
-import ru.vsu.summermemes.utils.image.BitmapConvertHelper
 import ru.vsu.summermemes.utils.image.GlideImageLoader
+import ru.vsu.summermemes.utils.image.TmpImageStorage
 
 class MemeDetailActivity : AppCompatActivity() {
 
@@ -29,13 +29,16 @@ class MemeDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_meme_detail)
+        loadValuesFromIntent()
+
+        initUI()
+    }
+
+    private fun loadValuesFromIntent() {
+        imageBitmap = TmpImageStorage.image
+        TmpImageStorage.image = null
 
         memeEntity = (intent.getSerializableExtra(MEME_EXTRA)) as? MemeEntity
-        val imageByteArray = (intent.getSerializableExtra(IMAGE_MEME_EXTRA)) as? ByteArray
-        imageByteArray?.let {
-            imageBitmap = BitmapConvertHelper.getBitmapFromByteArray(imageByteArray)
-        }
-        initUI()
     }
 
     private fun initUI() {
@@ -45,7 +48,8 @@ class MemeDetailActivity : AppCompatActivity() {
             if (memeEntity.meme.description.isEmpty()) {
                 hideDescription()
             }
-            meme_date_created.text = DateConvertHelper.getDaysAgoCreated(memeEntity.meme.createdDate)
+            meme_date_created.text =
+                DateConvertHelper.getDaysAgoCreated(memeEntity.meme.createdDate)
             setMemeImage()
         }
     }

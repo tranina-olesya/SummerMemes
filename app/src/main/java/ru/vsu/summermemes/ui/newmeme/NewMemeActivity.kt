@@ -59,7 +59,6 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
         configureHidingKeyboard()
 
         hideMemeImage()
-        updateButtonEnabledState()
     }
 
     private fun configureHidingKeyboard() {
@@ -89,7 +88,7 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
             showMemeImage()
             meme_image.setImageResource(R.drawable.surf_edu)
 
-            updateButtonEnabledState()
+            presenter.image = (meme_image.drawable as BitmapDrawable).bitmap
         }
     }
 
@@ -98,7 +97,7 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                updateButtonEnabledState()
+                presenter.title = s.toString()
             }
         })
     }
@@ -111,10 +110,8 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
         image_container.visibility = View.GONE
     }
 
-    private fun updateButtonEnabledState() {
-        meme_title_edit_text.text ?: return
-        create_meme_button.isEnabled =
-            meme_title_edit_text.text!!.isNotEmpty() && meme_image.drawable != null
+    override fun isCreateEnabled(isEnabled: Boolean) {
+        create_meme_button.isEnabled = isEnabled
     }
 
     private fun configureCloseButton() {
@@ -127,7 +124,7 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
         delete_image.setOnClickListener {
             meme_image.setImageDrawable(null)
             hideMemeImage()
-            updateButtonEnabledState()
+            presenter.image = null
         }
     }
 
@@ -135,10 +132,8 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
         create_meme_button.setOnClickListener {
             val title = meme_title_edit_text.text.toString()
             val description = meme_description_edit_text.text.toString()
-            (meme_image.drawable as? BitmapDrawable)?.let {
-                val bitmap = it.bitmap
-                presenter.saveButtonPressed(title, description, bitmap)
-            }
+            val bitmap = (meme_image.drawable as? BitmapDrawable)?.bitmap
+            presenter.saveButtonPressed(title, description, bitmap)
         }
     }
 }

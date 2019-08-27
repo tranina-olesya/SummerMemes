@@ -2,20 +2,22 @@ package ru.vsu.summermemes.ui.main.fragments.feed
 
 import android.graphics.Bitmap
 import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
-import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import ru.vsu.summermemes.api.repositories.MemeRepository
 import ru.vsu.summermemes.data.db.entities.MemeEntity
-import ru.vsu.summermemes.models.meme.MemeEntry
-import ru.vsu.summermemes.ui.main.base.MemeListPresenter
+import ru.vsu.summermemes.ui.base.BasePresenter
+import ru.vsu.summermemes.ui.main.fragments.base.MemeListPresenter
 import ru.vsu.summermemes.utils.extensions.convertToByteArray
 import ru.vsu.summermemes.utils.extensions.convertToMemeEntities
+import javax.inject.Inject
 
 @InjectViewState
-class FeedPresenter : MvpPresenter<FeedView>(), MemeListPresenter {
+class FeedPresenter : MemeListPresenter<FeedView>() {
 
-    private val memeRepository = MemeRepository()
+    @Inject
+    lateinit var memeRepository: MemeRepository
 
     private var subscription: Disposable? = null
 
@@ -34,11 +36,13 @@ class FeedPresenter : MvpPresenter<FeedView>(), MemeListPresenter {
         viewState.showLoading()
         subscription = memeRepository
             .getMemes()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
             .doOnTerminate {
                 viewState.hideLoading()
             }
-            .flatMap {
-                return@flatMap Observable.just(it.convertToMemeEntities())
+            .map {
+                return@map it.convertToMemeEntities()
             }
             .subscribe(
                 { memeList ->
@@ -51,10 +55,5 @@ class FeedPresenter : MvpPresenter<FeedView>(), MemeListPresenter {
                     else
                         viewState.showLoadingErrorOnTopOfContent()
                 })
-    }
-
-
-    override fun memeChosen(memeEntity: MemeEntity, bitmap: Bitmap?) {
-        viewState.openMemeDetailActivity(memeEntity, bitmap?.convertToByteArray())
     }
 }

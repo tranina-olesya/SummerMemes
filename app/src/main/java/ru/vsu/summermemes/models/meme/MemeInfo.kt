@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class MemeEntry(
+data class MemeInfo(
     @SerializedName("id")
     @ColumnInfo(name = "api_id")
     val apiId: Long?,

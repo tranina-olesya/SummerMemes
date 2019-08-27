@@ -7,20 +7,20 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.vsu.summermemes.BuildConfig
+import ru.vsu.summermemes.SummerMemesApp
 import ru.vsu.summermemes.api.interceptors.AuthInterceptor
-import ru.vsu.summermemes.api.interfaces.AuthAPI
-import ru.vsu.summermemes.api.interfaces.MemeAPI
 import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
 
 
 object NetworkService {
+
     private const val BASE_URL = "https://demo3161256.mockable.io"
 
     const val AUTH_HEADER = "Authorization"
 
     val accessToken: String?
         get() {
-            return UserRepository().getAccessToken()
+            return UserRepository(SummerMemesApp.appInstance).getAccessToken()
         }
 
     fun buildOkHttp(): OkHttpClient {

@@ -1,36 +1,28 @@
 package ru.vsu.summermemes.ui.main.fragments.profile
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
-import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_feed.*
+import kotlinx.android.synthetic.main.fragment_profile.progress_bar
+import kotlinx.android.synthetic.main.fragment_profile.recycler_view
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
-import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
 import ru.vsu.summermemes.databinding.FragmentProfileBinding
-import ru.vsu.summermemes.models.meme.MemeEntry
-import ru.vsu.summermemes.ui.main.base.FeedAdapter
+import ru.vsu.summermemes.models.auth.UserInfo
+import ru.vsu.summermemes.ui.main.fragments.base.FeedAdapter
+import ru.vsu.summermemes.ui.main.fragments.base.MemeListFragment
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
-import ru.vsu.summermemes.ui.memedetail.MemeDetailActivity
 
-class ProfileFragment : MvpAppCompatFragment(), ProfileView {
+class ProfileFragment : MemeListFragment(), ProfileView {
 
     @InjectPresenter
     lateinit var presenter: ProfilePresenter
-
-    companion object {
-        const val IMAGE_URL =
-            "https://static1.squarespace.com/static/58c89af95016e18d70555dca/58d8827f14fd83a16d060663/5b513bfd70a6ade9ec7d5aac/1532051074596/dmitriy-ilkevich-441481-unsplash.jpg?format=1500w"
-    }
-
-    val userRepository = UserRepository()
 
     private var feedAdapter: FeedAdapter? = null
 
@@ -41,7 +33,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        configureBinding()
 
         return binding.root
     }
@@ -56,9 +47,13 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         initUI()
     }
 
-    private fun configureBinding() {
-        binding.imageUrl = IMAGE_URL
-        binding.userInfo = userRepository.getUserInfo()
+    override fun setupBinding(imageUrl: String, userInfo: UserInfo?) {
+        binding.imageUrl = imageUrl
+        binding.userInfo = userInfo
+    }
+
+    override fun showLoadingErrorOnTopOfContent() {
+        showLoadingErrorOnTopOfContent(parent_view)
     }
 
     private fun initUI() {
@@ -69,7 +64,9 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     private fun configureRecyclerView() {
         activity?.let {
-            feedAdapter = FeedAdapter(it, presenter)
+            feedAdapter = FeedAdapter(it) { memeEntity, bitmap ->
+                presenter.memeChosen(memeEntity, bitmap)
+            }
             val layoutManager =
                 androidx.recyclerview.widget.StaggeredGridLayoutManager(
                     FeedFragment.COLUMNS_COUNT,
@@ -81,18 +78,15 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     }
 
 
-    override fun showMemes(memeEntities: List<MemeEntity>) {
+    override fun showMemesList(memes: List<MemeEntity>) {
         recycler_view.visibility = View.VISIBLE
 
         feedAdapter ?: configureRecyclerView()
-        feedAdapter?.memeList = memeEntities
+        feedAdapter?.memeList = memes
     }
 
     override fun hideMemesList() {
         recycler_view.visibility = View.GONE
-    }
-
-    override fun showLoadingError() {
     }
 
     override fun showLoading() {
@@ -101,14 +95,5 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     override fun hideLoading() {
         progress_bar.visibility = View.GONE
-    }
-
-    override fun openMemeDetailActivity(meme: MemeEntity, byteArray: ByteArray?) {
-        activity?.apply {
-            val intent = Intent(this, MemeDetailActivity::class.java)
-            intent.putExtra(MemeDetailActivity.MEME_EXTRA, meme)
-            intent.putExtra(MemeDetailActivity.IMAGE_MEME_EXTRA, byteArray)
-            startActivity(intent)
-        }
     }
 }

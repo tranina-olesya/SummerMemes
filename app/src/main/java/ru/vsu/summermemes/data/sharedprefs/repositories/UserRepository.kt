@@ -1,19 +1,21 @@
 package ru.vsu.summermemes.data.sharedprefs.repositories
 
-import ru.vsu.summermemes.SummerMemesApp
+import android.content.Context
 import ru.vsu.summermemes.data.sharedprefs.SharedPreferencesProvider
 import ru.vsu.summermemes.data.sharedprefs.storages.AuthStorage
 import ru.vsu.summermemes.data.sharedprefs.storages.UserStorage
 import ru.vsu.summermemes.models.auth.AuthResponseEntity
 import ru.vsu.summermemes.models.auth.UserInfo
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class UserRepository {
-
+@Singleton
+class UserRepository @Inject constructor(val context: Context) {
     private val userStorage =
-        UserStorage(SharedPreferencesProvider.getSharedPrefs(SummerMemesApp.provideContext()))
+        UserStorage(SharedPreferencesProvider.getSharedPrefs(context))
 
     private val authStorage =
-        AuthStorage(SharedPreferencesProvider.getSharedPrefs(SummerMemesApp.provideContext()))
+        AuthStorage(SharedPreferencesProvider.getSharedPrefs(context))
 
     fun saveAuthResponse(authResponseEntity: AuthResponseEntity) {
         saveAccessToken(authResponseEntity.accessToken)
