@@ -2,20 +2,25 @@ package ru.vsu.summermemes.ui.main.fragments.feed
 
 import android.graphics.Bitmap
 import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import ru.vsu.summermemes.SummerMemesApp
 import ru.vsu.summermemes.api.repositories.MemeRepository
 import ru.vsu.summermemes.data.db.entities.MemeEntity
-import ru.vsu.summermemes.models.meme.MemeEntry
-import ru.vsu.summermemes.ui.main.base.MemeListPresenter
+import ru.vsu.summermemes.di.component.DaggerPresenterInjector
+import ru.vsu.summermemes.di.module.ContextModule
+import ru.vsu.summermemes.di.module.NetworkModule
+import ru.vsu.summermemes.ui.base.BasePresenter
+import ru.vsu.summermemes.ui.base.MemeListPresenter
 import ru.vsu.summermemes.utils.extensions.convertToByteArray
 import ru.vsu.summermemes.utils.extensions.convertToMemeEntities
+import javax.inject.Inject
 
 @InjectViewState
-class FeedPresenter : MvpPresenter<FeedView>(), MemeListPresenter {
+class FeedPresenter : BasePresenter<FeedView>(), MemeListPresenter {
 
-    private val memeRepository = MemeRepository()
+    @Inject
+    lateinit var memeRepository: MemeRepository
 
     private var subscription: Disposable? = null
 

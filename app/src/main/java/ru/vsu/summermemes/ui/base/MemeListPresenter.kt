@@ -1,4 +1,4 @@
-package ru.vsu.summermemes.ui.main.base
+package ru.vsu.summermemes.ui.base
 
 import android.graphics.Bitmap
 import ru.vsu.summermemes.data.db.entities.MemeEntity

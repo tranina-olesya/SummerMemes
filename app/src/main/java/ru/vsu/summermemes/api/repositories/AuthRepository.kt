@@ -5,11 +5,12 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.vsu.summermemes.api.ApiProvider
+import ru.vsu.summermemes.api.interfaces.AuthAPI
 import ru.vsu.summermemes.models.auth.AuthRequestEntity
 import ru.vsu.summermemes.models.auth.AuthResponseEntity
+import javax.inject.Inject
 
-class AuthRepository {
-    val authAPI = ApiProvider.authAPI
+class AuthRepository @Inject constructor(val authAPI: AuthAPI) {
 
     fun login(authRequestEntity: AuthRequestEntity): Observable<AuthResponseEntity> {
         return authAPI

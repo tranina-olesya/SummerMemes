@@ -1,4 +1,4 @@
-package ru.vsu.summermemes.ui.main.base
+package ru.vsu.summermemes.ui.base
 
 import android.content.Context
 import androidx.databinding.DataBindingUtil
@@ -10,8 +10,6 @@ import kotlinx.android.synthetic.main.meme_item.view.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.MemeItemBinding
-import ru.vsu.summermemes.models.meme.MemeEntry
-import ru.vsu.summermemes.ui.main.fragments.feed.FeedPresenter
 
 class FeedAdapter(context: Context, var presenter: MemeListPresenter? = null) :
     RecyclerView.Adapter<FeedAdapter.MemeViewHolder>() {

@@ -13,10 +13,9 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_profile.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
-import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
 import ru.vsu.summermemes.databinding.FragmentProfileBinding
-import ru.vsu.summermemes.models.meme.MemeEntry
-import ru.vsu.summermemes.ui.main.base.FeedAdapter
+import ru.vsu.summermemes.models.auth.UserInfo
+import ru.vsu.summermemes.ui.base.FeedAdapter
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 import ru.vsu.summermemes.ui.memedetail.MemeDetailActivity
 
@@ -24,13 +23,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     @InjectPresenter
     lateinit var presenter: ProfilePresenter
-
-    companion object {
-        const val IMAGE_URL =
-            "https://static1.squarespace.com/static/58c89af95016e18d70555dca/58d8827f14fd83a16d060663/5b513bfd70a6ade9ec7d5aac/1532051074596/dmitriy-ilkevich-441481-unsplash.jpg?format=1500w"
-    }
-
-    val userRepository = UserRepository()
 
     private var feedAdapter: FeedAdapter? = null
 
@@ -41,7 +33,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        configureBinding()
 
         return binding.root
     }
@@ -56,9 +47,9 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         initUI()
     }
 
-    private fun configureBinding() {
-        binding.imageUrl = IMAGE_URL
-        binding.userInfo = userRepository.getUserInfo()
+    override fun setupBinding(imageUrl: String, userInfo: UserInfo?) {
+        binding.imageUrl = imageUrl
+        binding.userInfo = userInfo
     }
 
     private fun initUI() {

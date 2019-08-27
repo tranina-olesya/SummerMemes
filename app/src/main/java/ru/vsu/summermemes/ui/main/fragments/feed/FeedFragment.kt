@@ -15,8 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_feed.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
-import ru.vsu.summermemes.models.meme.MemeEntry
-import ru.vsu.summermemes.ui.main.base.FeedAdapter
+import ru.vsu.summermemes.ui.base.FeedAdapter
 import ru.vsu.summermemes.ui.memedetail.MemeDetailActivity
 
 class FeedFragment : MvpAppCompatFragment(), FeedView {

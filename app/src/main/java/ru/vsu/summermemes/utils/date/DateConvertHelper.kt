@@ -12,7 +12,7 @@ object DateConvertHelper {
     }
 
     fun getDaysForm(days: Int): String {
-        val context = SummerMemesApp.provideContext()
+        val context = SummerMemesApp.appInstance
 
         val form1 = context.getString(R.string.day_form_1)
         val form2 = context.getString(R.string.day_form_2)
@@ -37,8 +37,8 @@ object DateConvertHelper {
         val daysForm = getDaysForm(days)
 
         return when (days) {
-            0 -> SummerMemesApp.provideContext().getString(R.string.today)
-            else -> "%d %s %s".format(days, daysForm, SummerMemesApp.provideContext().getString(R.string.days_ago))
+            0 -> SummerMemesApp.appInstance.getString(R.string.today)
+            else -> "%d %s %s".format(days, daysForm, SummerMemesApp.appInstance.getString(R.string.days_ago))
         }
     }
 }

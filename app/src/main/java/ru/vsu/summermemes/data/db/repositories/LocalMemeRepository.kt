@@ -5,10 +5,11 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.vsu.summermemes.SummerMemesApp
+import ru.vsu.summermemes.data.db.dao.MemeDAO
 import ru.vsu.summermemes.data.db.entities.MemeEntity
+import javax.inject.Inject
 
-class LocalMemeRepository {
-    val memeDAO = SummerMemesApp.provideDatabase().memeDAO()
+class LocalMemeRepository @Inject constructor(val memeDAO: MemeDAO){
 
     fun insert(memeEntity: MemeEntity): Completable {
         return memeDAO

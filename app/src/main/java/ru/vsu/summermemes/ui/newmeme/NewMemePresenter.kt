@@ -2,20 +2,24 @@ package ru.vsu.summermemes.ui.newmeme
 
 import android.graphics.Bitmap
 import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.disposables.Disposable
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.data.db.repositories.LocalMemeRepository
 import ru.vsu.summermemes.models.meme.MemeEntry
+import ru.vsu.summermemes.ui.base.BasePresenter
 import ru.vsu.summermemes.utils.date.DateUtils
 import ru.vsu.summermemes.utils.image.ImageFileSaver
 import java.util.*
+import javax.inject.Inject
 
 @InjectViewState
-class NewMemePresenter : MvpPresenter<NewMemeView>() {
+class NewMemePresenter : BasePresenter<NewMemeView>() {
 
-    val imageFileRepository = ImageFileSaver()
-    val memeRepository = LocalMemeRepository()
+    @Inject
+    lateinit var imageFileRepository: ImageFileSaver
+
+    @Inject
+    lateinit var memeRepository: LocalMemeRepository
 
     var subscription: Disposable? = null
 

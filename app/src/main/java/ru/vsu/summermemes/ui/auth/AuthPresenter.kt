@@ -3,15 +3,24 @@ package ru.vsu.summermemes.ui.auth
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.disposables.Disposable
+import ru.vsu.summermemes.SummerMemesApp
 import ru.vsu.summermemes.api.repositories.AuthRepository
 import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
+import ru.vsu.summermemes.di.component.DaggerPresenterInjector
+import ru.vsu.summermemes.di.module.ContextModule
+import ru.vsu.summermemes.di.module.NetworkModule
 import ru.vsu.summermemes.models.auth.AuthRequestEntity
+import ru.vsu.summermemes.ui.base.BasePresenter
+import javax.inject.Inject
 
 @InjectViewState
-class AuthPresenter : MvpPresenter<AuthView>() {
+class AuthPresenter : BasePresenter<AuthView>() {
 
-    private val authRepository = AuthRepository()
-    private val userRepository = UserRepository()
+    @Inject
+    lateinit var authRepository: AuthRepository
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private var subscription: Disposable? = null
 
