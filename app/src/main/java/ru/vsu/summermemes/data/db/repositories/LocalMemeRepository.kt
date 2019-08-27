@@ -14,14 +14,10 @@ class LocalMemeRepository @Inject constructor(val memeDAO: MemeDAO){
     fun insert(memeEntity: MemeEntity): Completable {
         return memeDAO
             .insert(memeEntity)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
     }
 
     fun getAll(): Single<List<MemeEntity>> {
         return memeDAO
             .getAll()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
     }
 }

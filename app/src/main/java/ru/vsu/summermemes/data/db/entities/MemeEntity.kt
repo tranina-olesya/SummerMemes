@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.vsu.summermemes.models.meme.MemeEntry
+import ru.vsu.summermemes.models.meme.MemeInfo
 import java.io.Serializable
 
 @Entity(tableName = "memes")
@@ -16,5 +16,5 @@ class MemeEntity : Serializable {
     var imagePath: String? = null
 
     @Embedded
-    lateinit var meme: MemeEntry
+    lateinit var meme: MemeInfo
 }

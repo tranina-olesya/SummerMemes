@@ -18,14 +18,12 @@ class ImageFileSaver @Inject constructor(val context: Context) {
     fun saveImageBitmap(bitmap: Bitmap, name: String): Observable<String> {
         return Observable
             .just(saveImageBitmapToInternalStorage(bitmap, name))
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
     }
 
     private fun saveImageBitmapToInternalStorage(bitmap: Bitmap, name: String): String {
         val contextWrapper = ContextWrapper(context)
         val directory = contextWrapper.getDir(IMAGES_DIR, Context.MODE_PRIVATE)
-        val file = File(directory, "%s.png".format(name))
+        val file = File(directory, "%{name}.png")
 
         FileOutputStream(file).use {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)

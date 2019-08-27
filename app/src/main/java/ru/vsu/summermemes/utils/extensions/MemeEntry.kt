@@ -1,9 +1,9 @@
 package ru.vsu.summermemes.utils.extensions
 
 import ru.vsu.summermemes.data.db.entities.MemeEntity
-import ru.vsu.summermemes.models.meme.MemeEntry
+import ru.vsu.summermemes.models.meme.MemeInfo
 
-fun List<MemeEntry>.convertToMemeEntities(): List<MemeEntity> {
+fun List<MemeInfo>.convertToMemeEntities(): List<MemeEntity> {
     val result = mutableListOf<MemeEntity>()
     for (memeEntry in this) {
         val memeEntity = MemeEntity()

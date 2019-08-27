@@ -2,7 +2,9 @@ package ru.vsu.summermemes.ui.auth
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import ru.vsu.summermemes.SummerMemesApp
 import ru.vsu.summermemes.api.repositories.AuthRepository
 import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
@@ -59,6 +61,8 @@ class AuthPresenter : BasePresenter<AuthView>() {
         viewState.showLoading()
         subscription = authRepository
             .login(authRequestEntity)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
             .doOnNext { authResponse ->
                 userRepository.saveAuthResponse(authResponse)
             }

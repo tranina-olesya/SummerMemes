@@ -8,11 +8,6 @@
     <string name="auth_error">Во время запроса произошла ошибка, возможно вы неверно ввели логин/пароль.</string>
     <string name="feed_loading_error">Не удалось загрузить ленту \nОбновите экран или попробуйте позже.</string>
     <string name="popular_memes">Популярные мемы</string>
-    <string name="today">сегодня</string>
-    <string name="day_form_1">день</string>
-    <string name="day_form_2">дня</string>
-    <string name="day_form_3">дней</string>
-    <string name="days_ago">назад</string>
     <string name="refresh_memes_error">Отсутствует интернет-соединение \nПопробуйте позже</string>
     <string name="title_activity_new_meme">NewMemeActivity</string>
     <string name="create_button">Создать</string>
@@ -26,4 +21,11 @@
     <string name="logout">Выйти</string>
     <string name="logout_message">Действительно хотите выйти?</string>
     <string name="cancel">Отмена</string>
+
+    <plurals name="days">
+        <item quantity="one">%1$d день назад</item>
+        <item quantity="few">%1$d дня назад</item>
+        <item quantity="many">%1$d дней назад</item>
+        <item quantity="other">%1$d дней назад</item>
+    </plurals>
 </resources>

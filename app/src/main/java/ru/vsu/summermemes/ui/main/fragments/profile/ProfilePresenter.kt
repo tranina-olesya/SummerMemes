@@ -2,18 +2,19 @@ package ru.vsu.summermemes.ui.main.fragments.profile
 
 import android.graphics.Bitmap
 import com.arellomobile.mvp.InjectViewState
-import com.arellomobile.mvp.MvpPresenter
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.data.db.repositories.LocalMemeRepository
 import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
 import ru.vsu.summermemes.ui.base.BasePresenter
-import ru.vsu.summermemes.ui.base.MemeListPresenter
+import ru.vsu.summermemes.ui.main.fragments.base.MemeListPresenter
 import ru.vsu.summermemes.utils.extensions.convertToByteArray
 import javax.inject.Inject
 
 @InjectViewState
-class ProfilePresenter : BasePresenter<ProfileView>(), MemeListPresenter {
+class ProfilePresenter : MemeListPresenter<ProfileView>() {
 
     companion object {
         const val IMAGE_URL =
@@ -37,17 +38,15 @@ class ProfilePresenter : BasePresenter<ProfileView>(), MemeListPresenter {
     private fun loadMemes() {
         subscription = localMemeRepository
             .getAll()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
             .doAfterTerminate {
                 viewState.hideLoading()
             }
             .subscribe({
-                viewState.showMemes(it)
+                viewState.showMemesList(it)
             }, {
-                viewState.showLoadingError()
+                viewState.showLoadingErrorOnTopOfContent()
             })
-    }
-
-    override fun memeChosen(memeEntity: MemeEntity, bitmap: Bitmap?) {
-        viewState.openMemeDetailActivity(memeEntity, bitmap?.convertToByteArray())
     }
 }

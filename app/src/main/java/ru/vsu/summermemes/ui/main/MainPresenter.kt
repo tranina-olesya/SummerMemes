@@ -2,7 +2,9 @@ package ru.vsu.summermemes.ui.main
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import ru.vsu.summermemes.SummerMemesApp
 import ru.vsu.summermemes.api.repositories.AuthRepository
 import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
@@ -27,8 +29,10 @@ class MainPresenter : BasePresenter<MainView>() {
     fun logout() {
         subscription = authRepository
             .logout(userRepository.getAccessToken()!!)
-            .subscribe({
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe {
                 viewState.openAuthScreen()
-            })
+            }
     }
 }

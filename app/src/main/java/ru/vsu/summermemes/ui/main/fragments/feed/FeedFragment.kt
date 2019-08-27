@@ -1,24 +1,19 @@
 package ru.vsu.summermemes.ui.main.fragments.feed
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_feed.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
-import ru.vsu.summermemes.ui.base.FeedAdapter
-import ru.vsu.summermemes.ui.memedetail.MemeDetailActivity
+import ru.vsu.summermemes.ui.main.fragments.base.FeedAdapter
+import ru.vsu.summermemes.ui.main.fragments.base.MemeListFragment
 
-class FeedFragment : MvpAppCompatFragment(), FeedView {
+class FeedFragment : MemeListFragment(), FeedView {
 
     companion object {
         const val COLUMNS_COUNT = 2
@@ -70,26 +65,7 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
     }
 
     override fun showLoadingErrorOnTopOfContent() {
-        activity?.let {
-            val snackbar =
-                Snackbar.make(parent_view, R.string.refresh_memes_error, Snackbar.LENGTH_LONG)
-
-            snackbar.view.setBackgroundColor(ContextCompat.getColor(it, R.color.error))
-            val textView =
-                snackbar.view.findViewById(com.google.android.material.R.id.snackbar_text) as? TextView
-            textView?.setTextColor(ContextCompat.getColor(it, R.color.white))
-
-            snackbar.show()
-        }
-    }
-
-    override fun openMemeDetailActivity(meme: MemeEntity, byteArray: ByteArray?) {
-        activity?.apply {
-            val intent = Intent(this, MemeDetailActivity::class.java)
-            intent.putExtra(MemeDetailActivity.MEME_EXTRA, meme)
-            intent.putExtra(MemeDetailActivity.IMAGE_MEME_EXTRA, byteArray)
-            startActivity(intent)
-        }
+        showLoadingErrorOnTopOfContent(parent_view)
     }
 
     private fun initUI() {
@@ -102,7 +78,7 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
 
     private fun configureRecyclerView() {
         activity?.let {
-            feedAdapter = FeedAdapter(it, presenter)
+            feedAdapter = FeedAdapter(it)
             val layoutManager =
                 androidx.recyclerview.widget.StaggeredGridLayoutManager(
                     COLUMNS_COUNT,

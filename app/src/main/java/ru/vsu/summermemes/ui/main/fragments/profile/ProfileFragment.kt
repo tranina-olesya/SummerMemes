@@ -1,25 +1,25 @@
 package ru.vsu.summermemes.ui.main.fragments.profile
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
-import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_feed.*
+import kotlinx.android.synthetic.main.fragment_profile.progress_bar
+import kotlinx.android.synthetic.main.fragment_profile.recycler_view
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.FragmentProfileBinding
 import ru.vsu.summermemes.models.auth.UserInfo
-import ru.vsu.summermemes.ui.base.FeedAdapter
+import ru.vsu.summermemes.ui.main.fragments.base.FeedAdapter
+import ru.vsu.summermemes.ui.main.fragments.base.MemeListFragment
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
-import ru.vsu.summermemes.ui.memedetail.MemeDetailActivity
 
-class ProfileFragment : MvpAppCompatFragment(), ProfileView {
+class ProfileFragment : MemeListFragment(), ProfileView {
 
     @InjectPresenter
     lateinit var presenter: ProfilePresenter
@@ -52,6 +52,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         binding.userInfo = userInfo
     }
 
+    override fun showLoadingErrorOnTopOfContent() {
+        showLoadingErrorOnTopOfContent(parent_view)
+    }
+
     private fun initUI() {
         configureRecyclerView()
         hideMemesList()
@@ -60,7 +64,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     private fun configureRecyclerView() {
         activity?.let {
-            feedAdapter = FeedAdapter(it, presenter)
+            feedAdapter = FeedAdapter(it)
             val layoutManager =
                 androidx.recyclerview.widget.StaggeredGridLayoutManager(
                     FeedFragment.COLUMNS_COUNT,
@@ -72,18 +76,15 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     }
 
 
-    override fun showMemes(memeEntities: List<MemeEntity>) {
+    override fun showMemesList(memes: List<MemeEntity>) {
         recycler_view.visibility = View.VISIBLE
 
         feedAdapter ?: configureRecyclerView()
-        feedAdapter?.memeList = memeEntities
+        feedAdapter?.memeList = memes
     }
 
     override fun hideMemesList() {
         recycler_view.visibility = View.GONE
-    }
-
-    override fun showLoadingError() {
     }
 
     override fun showLoading() {
@@ -92,14 +93,5 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     override fun hideLoading() {
         progress_bar.visibility = View.GONE
-    }
-
-    override fun openMemeDetailActivity(meme: MemeEntity, byteArray: ByteArray?) {
-        activity?.apply {
-            val intent = Intent(this, MemeDetailActivity::class.java)
-            intent.putExtra(MemeDetailActivity.MEME_EXTRA, meme)
-            intent.putExtra(MemeDetailActivity.IMAGE_MEME_EXTRA, byteArray)
-            startActivity(intent)
-        }
     }
 }

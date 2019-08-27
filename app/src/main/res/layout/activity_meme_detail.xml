@@ -6,10 +6,6 @@
         <variable
             name="memeEntity"
             type="ru.vsu.summermemes.data.db.entities.MemeEntity" />
-
-        <variable
-            name="image"
-            type="ru.vsu.summermemes.models.meme.MemeEntry" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

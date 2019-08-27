@@ -15,14 +15,10 @@ class AuthRepository @Inject constructor(val authAPI: AuthAPI) {
     fun login(authRequestEntity: AuthRequestEntity): Observable<AuthResponseEntity> {
         return authAPI
             .login(authRequestEntity)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
     }
 
     fun logout(accessToken: String): Completable {
         return authAPI
             .logout(accessToken)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
     }
 }
