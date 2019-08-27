@@ -16,7 +16,7 @@ data class MemeInfo(
     val description: String,
     @ColumnInfo(name = "isFavorite")
     @SerializedName("isFavorite")
-    val isFavorite: Boolean,
+    var isFavorite: Boolean,
     @ColumnInfo(name = "createdDate")
     @SerializedName("createdDate")
     val createdDate: Long,

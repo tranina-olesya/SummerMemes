@@ -1,16 +1,12 @@
 package ru.vsu.summermemes.ui.main.fragments.profile
 
-import android.graphics.Bitmap
 import com.arellomobile.mvp.InjectViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.data.db.repositories.LocalMemeRepository
 import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
-import ru.vsu.summermemes.ui.base.BasePresenter
 import ru.vsu.summermemes.ui.main.fragments.base.MemeListPresenter
-import ru.vsu.summermemes.utils.extensions.convertToByteArray
 import javax.inject.Inject
 
 @InjectViewState
