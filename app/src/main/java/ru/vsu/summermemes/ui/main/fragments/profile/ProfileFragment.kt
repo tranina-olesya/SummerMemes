@@ -85,7 +85,11 @@ class ProfileFragment : MemeListFragment(), ProfileView {
         recycler_view.visibility = View.VISIBLE
 
         feedAdapter ?: configureRecyclerView()
-        feedAdapter?.memeList = memes
+        feedAdapter?.memeList = memes.toMutableList()
+    }
+
+    override fun notifyMemeDeleted(position: Int) {
+        feedAdapter?.deleteMeme(position)
     }
 
     override fun hideMemesList() {

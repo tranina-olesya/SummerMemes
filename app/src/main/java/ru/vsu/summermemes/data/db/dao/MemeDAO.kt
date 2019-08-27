@@ -1,6 +1,7 @@
 package ru.vsu.summermemes.data.db.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import io.reactivex.Completable
@@ -14,4 +15,7 @@ interface MemeDAO {
 
     @Query("select * from memes")
     fun getAll(): Single<List<MemeEntity>>
+
+    @Delete
+    fun delete(memeEntity: MemeEntity): Completable
 }

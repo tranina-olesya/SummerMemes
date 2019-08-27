@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.data.db.repositories.LocalMemeRepository
 import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
 import ru.vsu.summermemes.ui.main.fragments.base.MemeListPresenter
@@ -29,6 +30,16 @@ class ProfilePresenter : MemeListPresenter<ProfileView>() {
         loadMemes()
         viewState.setupBinding(IMAGE_URL, userRepository.getUserInfo())
         viewState.showLoading()
+    }
+
+    override fun favoriteButtonPressed(meme: MemeEntity, position: Int) {
+        subscription = localMemeRepository
+            .delete(meme)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe {
+                viewState.notifyMemeDeleted(position)
+            }
     }
 
     private fun loadMemes() {

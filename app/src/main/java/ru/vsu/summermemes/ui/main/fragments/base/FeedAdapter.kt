@@ -21,7 +21,7 @@ class FeedAdapter(
 
     private val inflater = LayoutInflater.from(context)
 
-    var memeList = listOf<MemeEntity>()
+    var memeList: MutableList<MemeEntity> = mutableListOf<MemeEntity>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -39,10 +39,15 @@ class FeedAdapter(
         viewHolder.bind(memeList[position], position)
     }
 
-    fun updateMemeItem(memeEntity: MemeEntity, position: Int) {
+    fun updateMemeFavorite(memeEntity: MemeEntity, position: Int) {
         val oldValue = memeList[position]
         oldValue.meme.isFavorite = memeEntity.meme.isFavorite
         notifyItemChanged(position)
+    }
+
+    fun deleteMeme(position: Int) {
+        memeList.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     inner class MemeViewHolder(val binding: MemeItemBinding) :
