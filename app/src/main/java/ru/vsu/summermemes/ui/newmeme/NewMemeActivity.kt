@@ -116,7 +116,7 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
 
     private fun configureCloseButton() {
         toolbar_close_button.setOnClickListener {
-            finish()
+            onBackPressed()
         }
     }
 

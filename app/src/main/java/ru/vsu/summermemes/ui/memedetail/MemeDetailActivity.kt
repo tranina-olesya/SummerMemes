@@ -3,28 +3,27 @@ package ru.vsu.summermemes.ui.memedetail
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_meme_detail.*
 import kotlinx.android.synthetic.main.toolbar_meme_detail_activity.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.ActivityMemeDetailBinding
-import ru.vsu.summermemes.utils.date.DateConvertHelper
 import ru.vsu.summermemes.utils.image.GlideImageLoader
 import ru.vsu.summermemes.utils.image.TmpImageStorage
 
-class MemeDetailActivity : AppCompatActivity() {
+class MemeDetailActivity : MvpAppCompatActivity(), MemeDetailView {
 
     companion object {
         const val MEME_EXTRA = "MEME"
-        const val IMAGE_MEME_EXTRA = "IMAGE_BITMAP"
     }
 
-    var memeEntity: MemeEntity? = null
-    var imageBitmap: Bitmap? = null
-
     private lateinit var binding: ActivityMemeDetailBinding
+
+    @InjectPresenter
+    lateinit var presenter: MemeDetailPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,51 +31,45 @@ class MemeDetailActivity : AppCompatActivity() {
         loadValuesFromIntent()
 
         initUI()
+        presenter.viewIsReady()
+    }
+
+    override fun hideDescription() {
+        meme_description.visibility = View.GONE
+    }
+
+    override fun initMeme(memeEntity: MemeEntity, date: String) {
+        binding.memeEntity = memeEntity
+        meme_date_created.text = date
+    }
+
+    override fun setImageFromBitmap(bitmap: Bitmap) {
+        meme_image.setImageBitmap(bitmap)
+    }
+
+    override fun loadImageFromURL(url: String) {
+        GlideImageLoader.loadImage(url, meme_image)
+    }
+
+    override fun loadImageFromFiles(uri: String) {
+        GlideImageLoader.loadImageFromFiles(uri, meme_image)
     }
 
     private fun loadValuesFromIntent() {
-        imageBitmap = TmpImageStorage.image
+        presenter.imageBitmap = TmpImageStorage.image
         TmpImageStorage.image = null
 
-        memeEntity = (intent.getSerializableExtra(MEME_EXTRA)) as? MemeEntity
+        presenter.memeEntity = (intent.getSerializableExtra(MEME_EXTRA)) as? MemeEntity
     }
 
     private fun initUI() {
         configureCloseButton()
-        memeEntity?.let { memeEntity ->
-            binding.memeEntity = memeEntity
-            if (memeEntity.meme.description.isEmpty()) {
-                hideDescription()
-            }
-            meme_date_created.text =
-                DateConvertHelper.getDaysAgoCreated(memeEntity.meme.createdDate)
-            setMemeImage()
-        }
     }
 
-    private fun hideDescription() {
-        meme_description.visibility = View.GONE
-    }
 
     private fun configureCloseButton() {
         toolbar_close_button.setOnClickListener {
-            finish()
-        }
-    }
-
-    private fun setMemeImage() {
-        if (imageBitmap != null)
-            meme_image.setImageBitmap(imageBitmap)
-        else
-            downloadImage()
-    }
-
-    private fun downloadImage() {
-        memeEntity?.meme?.photoUrl?.let {
-            GlideImageLoader.loadImage(it, meme_image)
-        }
-        memeEntity?.imagePath?.let {
-            GlideImageLoader.loadImageFromFiles(it, meme_image)
+            onBackPressed()
         }
     }
 }

@@ -30,6 +30,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:transitionName="meme_transition"
                     android:id="@+id/meme_image"
                     uri="@{ memeEntity.imagePath }"
                     url="@{ memeEntity.meme.photoUrl }"
