@@ -24,4 +24,6 @@
     <string name="make_photo">Сделать фото</string>
     <string name="about_app">О приложении</string>
     <string name="logout">Выйти</string>
+    <string name="logout_message">Действительно хотите выйти?</string>
+    <string name="cancel">Отмена</string>
 </resources>
