@@ -140,4 +140,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
         dialog = builder.create()
     }
+
+    private fun configureSearchButton() {
+        toolbar_search_button.setOnClickListener {
+
+        }
+    }
 }

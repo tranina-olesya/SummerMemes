@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class MemeInfo(
+    @ColumnInfo(name = "apiId")
     @SerializedName("id")
-    @ColumnInfo(name = "api_id")
     val apiId: Long?,
     @ColumnInfo(name = "title")
     @SerializedName("title")
@@ -20,7 +20,7 @@ data class MemeInfo(
     @ColumnInfo(name = "createdDate")
     @SerializedName("createdDate")
     val createdDate: Long,
-    @ColumnInfo(name = "photoUtl")
+    @ColumnInfo(name = "photoUrl")
     @SerializedName("photoUtl")
     val photoUrl: String?
 ) : Serializable

@@ -6,6 +6,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import ru.vsu.summermemes.api.repositories.MemeRepository
 import ru.vsu.summermemes.data.db.entities.MemeEntity
+import ru.vsu.summermemes.data.db.repositories.LocalMemeRepository
 import ru.vsu.summermemes.ui.main.fragments.base.MemeListPresenter
 import ru.vsu.summermemes.utils.extensions.convertToMemeEntities
 import ru.vsu.summermemes.utils.ui.MemeShareHelper
@@ -20,7 +21,12 @@ class FeedPresenter : MemeListPresenter<FeedView>() {
     @Inject
     lateinit var memeShareHelper: MemeShareHelper
 
-    private var subscription: Disposable? = null
+    @Inject
+    lateinit var localMemeRepository: LocalMemeRepository
+
+    private var apiSubscription: Disposable? = null
+
+    private var cacheSubscription: Disposable? = null
 
     private var memeList: List<MemeEntity> = listOf()
 
@@ -35,7 +41,7 @@ class FeedPresenter : MemeListPresenter<FeedView>() {
 
     fun loadMemes() {
         viewState.showLoading()
-        subscription = memeRepository
+        apiSubscription = memeRepository
             .getMemes()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -44,6 +50,9 @@ class FeedPresenter : MemeListPresenter<FeedView>() {
             }
             .map {
                 return@map it.convertToMemeEntities()
+            }
+            .doOnNext {
+                cacheMemes(it)
             }
             .subscribe(
                 { memeList ->
@@ -60,5 +69,13 @@ class FeedPresenter : MemeListPresenter<FeedView>() {
 
     override fun shareMeme(memeEntity: MemeEntity) {
         viewState.shareMeme(memeShareHelper.shareMemeIntent(memeEntity))
+    }
+
+    fun cacheMemes(memeEntities: List<MemeEntity>) {
+        cacheSubscription = localMemeRepository
+            .insertAll(memeEntities)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {})
     }
 }

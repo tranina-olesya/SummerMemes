@@ -9,16 +9,22 @@ import javax.inject.Inject
 class LocalMemeRepository @Inject constructor(val memeDAO: MemeDAO) {
 
     fun insert(memeEntity: MemeEntity): Completable {
-        return memeDAO
-            .insert(memeEntity)
+        return memeDAO.insert(memeEntity)
     }
 
     fun getAll(): Single<List<MemeEntity>> {
-        return memeDAO
-            .getAll()
+        return memeDAO.getAll()
+    }
+
+    fun getAllLocal(): Single<List<MemeEntity>> {
+        return memeDAO.getAllLocal(true)
     }
 
     fun delete(memeEntity: MemeEntity): Completable {
         return memeDAO.delete(memeEntity)
+    }
+
+    fun insertAll(memeEntities: List<MemeEntity>): Completable {
+        return memeDAO.insertAll(memeEntities)
     }
 }

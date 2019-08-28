@@ -13,8 +13,14 @@ interface MemeDAO {
     @Insert
     fun insert(memeEntity: MemeEntity): Completable
 
+    @Insert
+    fun insertAll(memeEntities: List<MemeEntity>): Completable
+
     @Query("select * from memes")
     fun getAll(): Single<List<MemeEntity>>
+
+    @Query("select * from memes where isLocal = :isLocal")
+    fun getAllLocal(isLocal: Boolean): Single<List<MemeEntity>>
 
     @Delete
     fun delete(memeEntity: MemeEntity): Completable

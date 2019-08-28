@@ -55,6 +55,7 @@ class NewMemePresenter : BasePresenter<NewMemeView>() {
 
             val memeEntity = MemeEntity()
             memeEntity.meme = memeEntry
+            memeEntity.isLocal = true
 
             saveMeme(memeEntity, bitmap)
         }

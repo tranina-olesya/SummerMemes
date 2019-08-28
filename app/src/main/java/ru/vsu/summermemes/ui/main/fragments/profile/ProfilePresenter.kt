@@ -48,7 +48,7 @@ class ProfilePresenter : MemeListPresenter<ProfileView>() {
 
     private fun loadMemes() {
         subscription = localMemeRepository
-            .getAll()
+            .getAllLocal()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .doAfterTerminate {
