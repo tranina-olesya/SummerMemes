@@ -1,5 +1,6 @@
 package ru.vsu.summermemes.ui.main.fragments.base
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.view.View
 import android.widget.ImageView
@@ -22,4 +23,6 @@ interface MemeListView : MvpView {
     fun openMemeDetailActivity(meme: MemeEntity, bitmap: Bitmap?, imageView: ImageView)
 
     fun updateElement(meme: MemeEntity, position: Int)
+
+    fun shareMeme(intent: Intent)
 }

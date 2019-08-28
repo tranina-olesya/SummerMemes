@@ -53,6 +53,12 @@ abstract class MemeListFragment : MvpAppCompatFragment(), MemeListView {
         }
     }
 
+    override fun shareMeme(intent: Intent) {
+        activity?.apply {
+            startActivity(intent)
+        }
+    }
+
     private fun FragmentActivity.configureTransition() {
         val fade = Fade()
         fade.excludeTarget(android.R.id.statusBarBackground, true)

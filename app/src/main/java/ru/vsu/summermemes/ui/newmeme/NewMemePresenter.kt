@@ -39,7 +39,7 @@ class NewMemePresenter : BasePresenter<NewMemeView>() {
 
     fun saveButtonPressed(title: String?, description: String?, bitmap: Bitmap?) {
         if (title != null && title.isNotEmpty() && title.length <= NewMemeActivity.MAX_TITLE_LENGTH &&
-            description != null && description.isNotEmpty() && description.length <= NewMemeActivity.MAX_DESCRIPTION_LENGTH &&
+            description != null && description.length <= NewMemeActivity.MAX_DESCRIPTION_LENGTH &&
             bitmap != null
         ) {
             val memeEntry =

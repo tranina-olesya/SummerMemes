@@ -87,6 +87,8 @@ class FeedFragment : MemeListFragment(), FeedView {
                     presenter.memeChosen(memeEntity, bitmap, imageView)
                 }, { meme, position ->
                     presenter.favoriteButtonPressed(meme, position)
+                }, { memeEntity ->
+                    presenter.shareMeme(memeEntity)
                 })
             val layoutManager =
                 androidx.recyclerview.widget.StaggeredGridLayoutManager(

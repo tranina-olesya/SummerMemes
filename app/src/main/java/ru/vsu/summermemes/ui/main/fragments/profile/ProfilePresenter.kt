@@ -8,6 +8,7 @@ import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.data.db.repositories.LocalMemeRepository
 import ru.vsu.summermemes.data.sharedprefs.repositories.UserRepository
 import ru.vsu.summermemes.ui.main.fragments.base.MemeListPresenter
+import ru.vsu.summermemes.utils.ui.MemeShareHelper
 import javax.inject.Inject
 
 @InjectViewState
@@ -23,6 +24,9 @@ class ProfilePresenter : MemeListPresenter<ProfileView>() {
 
     @Inject
     lateinit var userRepository: UserRepository
+
+    @Inject
+    lateinit var memeShareHelper: MemeShareHelper
 
     private var subscription: Disposable? = null
 
@@ -55,5 +59,9 @@ class ProfilePresenter : MemeListPresenter<ProfileView>() {
             }, {
                 viewState.showLoadingErrorOnTopOfContent()
             })
+    }
+
+    override fun shareMeme(memeEntity: MemeEntity) {
+        viewState.shareMeme(memeShareHelper.shareMemeIntent(memeEntity))
     }
 }
