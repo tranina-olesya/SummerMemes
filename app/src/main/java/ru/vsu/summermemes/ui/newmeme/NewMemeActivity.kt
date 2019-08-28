@@ -1,8 +1,13 @@
 package ru.vsu.summermemes.ui.newmeme
 
+import android.Manifest
 import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -16,11 +21,16 @@ import kotlinx.android.synthetic.main.activity_new_meme.*
 import kotlinx.android.synthetic.main.toolbar_new_meme.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.ui.newmeme.fragments.AddImageDialogFragment
+import ru.vsu.summermemes.utils.PermissionConstants
+
 
 class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
     companion object {
         const val MAX_TITLE_LENGTH = 140
         const val MAX_DESCRIPTION_LENGTH = 1000
+
+        const val INTENT_OPEN_CAMERA = 1
+        const val INTENT_OPEN_GALLERY = 2
     }
 
     @InjectPresenter
@@ -84,11 +94,6 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
         add_image_button.setOnClickListener {
             val dialog = AddImageDialogFragment()
             dialog.show(supportFragmentManager, "")
-
-            showMemeImage()
-            meme_image.setImageResource(R.drawable.surf_edu)
-
-            presenter.image = (meme_image.drawable as BitmapDrawable).bitmap
         }
     }
 
@@ -102,11 +107,11 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
         })
     }
 
-    private fun showMemeImage() {
+    override fun showMemeImage() {
         image_container.visibility = View.VISIBLE
     }
 
-    private fun hideMemeImage() {
+    override fun hideMemeImage() {
         image_container.visibility = View.GONE
     }
 
@@ -114,6 +119,9 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
         create_meme_button.isEnabled = isEnabled
     }
 
+    override fun setMemeImage(bitmap: Bitmap) {
+        meme_image.setImageBitmap(bitmap)
+    }
     private fun configureCloseButton() {
         toolbar_close_button.setOnClickListener {
             onBackPressed()
@@ -122,8 +130,6 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
 
     private fun configureDeleteImageButton() {
         delete_image.setOnClickListener {
-            meme_image.setImageDrawable(null)
-            hideMemeImage()
             presenter.image = null
         }
     }
@@ -134,6 +140,72 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
             val description = meme_description_edit_text.text.toString()
             val bitmap = (meme_image.drawable as? BitmapDrawable)?.bitmap
             presenter.saveButtonPressed(title, description, bitmap)
+        }
+    }
+
+    override fun checkPermission(permissionName: String) {
+        if (checkSelfPermission(permissionName) == PackageManager.PERMISSION_GRANTED) {
+            presenter.permissionGranted(permissionName)
+        } else
+            presenter.permissionNotGranted(permissionName)
+    }
+
+    fun cameraButtonClicked() {
+        presenter.cameraButtonClicked()
+    }
+
+    fun galleryButtonClicked() {
+        presenter.galleryButtonClicked()
+    }
+
+    override fun requestPermission(permissionName: String, permissionConstant: Int) {
+        requestPermissions(
+            arrayOf(permissionName),
+            permissionConstant
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PermissionConstants.PERMISSION_REQUEST_CAMERA -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    presenter.permissionGranted(Manifest.permission.CAMERA)
+                } else {
+                    presenter.permissionDenied(Manifest.permission.CAMERA)
+                }
+                return
+            }
+        }
+    }
+
+    override fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, INTENT_OPEN_CAMERA)
+    }
+
+    override fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        startActivityForResult(intent, INTENT_OPEN_GALLERY)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            when (requestCode) {
+                INTENT_OPEN_CAMERA -> {
+                    val bitmap = data.extras?.get("data") as Bitmap
+                    presenter.image = bitmap
+                }
+                INTENT_OPEN_GALLERY -> {
+                    val selectedImageUri = data.data
+                    presenter.image = MediaStore.Images.Media.getBitmap(contentResolver, selectedImageUri)
+                }
+            }
         }
     }
 }

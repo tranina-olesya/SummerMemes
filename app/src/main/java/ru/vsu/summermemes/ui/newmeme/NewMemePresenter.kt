@@ -1,5 +1,6 @@
 package ru.vsu.summermemes.ui.newmeme
 
+import android.Manifest
 import android.graphics.Bitmap
 import com.arellomobile.mvp.InjectViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -9,6 +10,7 @@ import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.data.db.repositories.LocalMemeRepository
 import ru.vsu.summermemes.models.meme.MemeInfo
 import ru.vsu.summermemes.ui.base.BasePresenter
+import ru.vsu.summermemes.utils.PermissionConstants
 import ru.vsu.summermemes.utils.date.DateUtils
 import ru.vsu.summermemes.utils.image.ImageFileSaver
 import java.util.*
@@ -28,6 +30,12 @@ class NewMemePresenter : BasePresenter<NewMemeView>() {
     var image: Bitmap? = null
         set(value) {
             field = value
+            if (value == null)
+                viewState.hideMemeImage()
+            else {
+                viewState.showMemeImage()
+                viewState.setMemeImage(value)
+            }
             updateButtonEnabledState()
         }
 
@@ -82,5 +90,41 @@ class NewMemePresenter : BasePresenter<NewMemeView>() {
             viewState.isCreateEnabled(false)
         } else
             viewState.isCreateEnabled(true)
+    }
+
+    fun cameraButtonClicked() {
+        viewState.checkPermission(Manifest.permission.CAMERA)
+    }
+
+    fun galleryButtonClicked() {
+        viewState.checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
+
+    fun permissionGranted(permissionName: String) {
+        when (permissionName) {
+            Manifest.permission.CAMERA ->
+                viewState.openCamera()
+            Manifest.permission.READ_EXTERNAL_STORAGE ->
+                viewState.openGallery()
+        }
+    }
+
+    fun permissionNotGranted(permissionName: String) {
+        when (permissionName) {
+            Manifest.permission.CAMERA ->
+                viewState.requestPermission(
+                    permissionName,
+                    PermissionConstants.PERMISSION_REQUEST_CAMERA
+                )
+            Manifest.permission.READ_EXTERNAL_STORAGE ->
+                viewState.requestPermission(
+                    permissionName,
+                    PermissionConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
+                )
+        }
+    }
+
+    fun permissionDenied(permissionName: String) {
+
     }
 }
