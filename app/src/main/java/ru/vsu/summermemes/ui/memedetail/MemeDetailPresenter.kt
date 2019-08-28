@@ -5,12 +5,17 @@ import com.arellomobile.mvp.InjectViewState
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.ui.base.BasePresenter
 import ru.vsu.summermemes.utils.date.DateConvertHelper
+import ru.vsu.summermemes.utils.ui.MemeShareHelper
+import javax.inject.Inject
 
 @InjectViewState
 class MemeDetailPresenter : BasePresenter<MemeDetailView>() {
 
     var memeEntity: MemeEntity? = null
     var imageBitmap: Bitmap? = null
+
+    @Inject
+    lateinit var memeShareHelper: MemeShareHelper
 
     fun viewIsReady() {
         memeEntity?.let { memeEntity ->
@@ -39,5 +44,10 @@ class MemeDetailPresenter : BasePresenter<MemeDetailView>() {
         memeEntity?.imagePath?.let {
             viewState.loadImageFromFiles(it)
         }
+    }
+
+    fun shareMeme() {
+        memeEntity ?: return
+        viewState.shareMeme(memeShareHelper.shareMemeIntent(memeEntity!!))
     }
 }

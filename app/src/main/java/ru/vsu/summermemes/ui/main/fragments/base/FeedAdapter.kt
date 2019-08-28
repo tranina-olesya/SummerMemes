@@ -16,7 +16,8 @@ import ru.vsu.summermemes.databinding.MemeItemBinding
 class FeedAdapter(
     context: Context,
     val onClickListener: (element: MemeEntity, bitmap: Bitmap?, imageView: ImageView) -> Unit,
-    val onFavoriteClickListener: (element: MemeEntity, position: Int) -> Unit
+    val onFavoriteClickListener: (element: MemeEntity, position: Int) -> Unit,
+    val onShareClickListener: (element: MemeEntity) -> Unit
 ) : RecyclerView.Adapter<FeedAdapter.MemeViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
@@ -42,7 +43,7 @@ class FeedAdapter(
     fun updateMemeFavorite(memeEntity: MemeEntity, position: Int) {
         val oldValue = memeList[position]
         oldValue.meme.isFavorite = memeEntity.meme.isFavorite
-        notifyItemChanged(position)
+        notifyItemChanged(position, memeEntity)
     }
 
     fun deleteMeme(position: Int) {
@@ -63,6 +64,10 @@ class FeedAdapter(
 
             binding.favoriteButton.setOnClickListener {
                 onFavoriteClickListener.invoke(memeEntity, position)
+            }
+
+            binding.shareButton.setOnClickListener {
+                onShareClickListener.invoke(memeEntity)
             }
         }
     }

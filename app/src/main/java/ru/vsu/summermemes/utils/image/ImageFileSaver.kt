@@ -3,6 +3,7 @@ package ru.vsu.summermemes.utils.image
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
+import android.os.Environment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -21,9 +22,8 @@ class ImageFileSaver @Inject constructor(val context: Context) {
     }
 
     private fun saveImageBitmapToInternalStorage(bitmap: Bitmap, name: String): String {
-        val contextWrapper = ContextWrapper(context)
-        val directory = contextWrapper.getDir(IMAGES_DIR, Context.MODE_PRIVATE)
-        val file = File(directory, "%{name}.png")
+        val directory = context.getExternalFilesDir(IMAGES_DIR)
+        val file = File(directory, "${name}.png")
 
         FileOutputStream(file).use {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
