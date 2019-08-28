@@ -1,5 +1,6 @@
 package ru.vsu.summermemes.ui.newmeme
 
+import android.graphics.Bitmap
 import com.arellomobile.mvp.MvpView
 
 interface NewMemeView : MvpView {
@@ -18,4 +19,8 @@ interface NewMemeView : MvpView {
     fun requestPermission(permissionName: String, permissionConstant: Int)
 
     fun openCamera()
+
+    fun openGallery()
+
+    fun setMemeImage(bitmap: Bitmap)
 }

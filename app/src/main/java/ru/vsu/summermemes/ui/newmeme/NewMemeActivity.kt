@@ -29,7 +29,8 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
         const val MAX_TITLE_LENGTH = 140
         const val MAX_DESCRIPTION_LENGTH = 1000
 
-        const val INTENT_REQUEST_CAMERA = 1
+        const val INTENT_OPEN_CAMERA = 1
+        const val INTENT_OPEN_GALLERY = 2
     }
 
     @InjectPresenter
@@ -93,11 +94,6 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
         add_image_button.setOnClickListener {
             val dialog = AddImageDialogFragment()
             dialog.show(supportFragmentManager, "")
-
-            showMemeImage()
-            meme_image.setImageResource(R.drawable.surf_edu)
-
-            presenter.image = (meme_image.drawable as BitmapDrawable).bitmap
         }
     }
 
@@ -123,6 +119,9 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
         create_meme_button.isEnabled = isEnabled
     }
 
+    override fun setMemeImage(bitmap: Bitmap) {
+        meme_image.setImageBitmap(bitmap)
+    }
     private fun configureCloseButton() {
         toolbar_close_button.setOnClickListener {
             onBackPressed()
@@ -131,7 +130,6 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
 
     private fun configureDeleteImageButton() {
         delete_image.setOnClickListener {
-            meme_image.setImageDrawable(null)
             presenter.image = null
         }
     }
@@ -185,24 +183,29 @@ class NewMemeActivity : MvpAppCompatActivity(), NewMemeView {
 
     override fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, INTENT_REQUEST_CAMERA)
+        startActivityForResult(intent, INTENT_OPEN_CAMERA)
+    }
+
+    override fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        startActivityForResult(intent, INTENT_OPEN_GALLERY)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK && data != null && data.extras != null) {
+        if (resultCode == Activity.RESULT_OK && data != null) {
             when (requestCode) {
-                INTENT_REQUEST_CAMERA -> {
-                    val bitmap = data.extras!!.get("data") as Bitmap
-                    meme_image.setImageBitmap(bitmap)
+                INTENT_OPEN_CAMERA -> {
+                    val bitmap = data.extras?.get("data") as Bitmap
                     presenter.image = bitmap
                 }
+                INTENT_OPEN_GALLERY -> {
+                    val selectedImageUri = data.data
+                    presenter.image = MediaStore.Images.Media.getBitmap(contentResolver, selectedImageUri)
+                }
             }
-
-//                val selectedImageUri = data.data
-//                meme_image.setImageURI(selectedImageUri)
-
         }
     }
 }

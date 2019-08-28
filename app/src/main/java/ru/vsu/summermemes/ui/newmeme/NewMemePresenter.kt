@@ -30,10 +30,12 @@ class NewMemePresenter : BasePresenter<NewMemeView>() {
     var image: Bitmap? = null
         set(value) {
             field = value
-            if( value == null)
+            if (value == null)
                 viewState.hideMemeImage()
-            else
+            else {
                 viewState.showMemeImage()
+                viewState.setMemeImage(value)
+            }
             updateButtonEnabledState()
         }
 
@@ -102,17 +104,23 @@ class NewMemePresenter : BasePresenter<NewMemeView>() {
         when (permissionName) {
             Manifest.permission.CAMERA ->
                 viewState.openCamera()
-//            Manifest.permission.READ_EXTERNAL_STORAGE ->
-
+            Manifest.permission.READ_EXTERNAL_STORAGE ->
+                viewState.openGallery()
         }
     }
 
     fun permissionNotGranted(permissionName: String) {
         when (permissionName) {
             Manifest.permission.CAMERA ->
-                viewState.requestPermission(permissionName, PermissionConstants.PERMISSION_REQUEST_CAMERA)
+                viewState.requestPermission(
+                    permissionName,
+                    PermissionConstants.PERMISSION_REQUEST_CAMERA
+                )
             Manifest.permission.READ_EXTERNAL_STORAGE ->
-                viewState.requestPermission(permissionName, PermissionConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE)
+                viewState.requestPermission(
+                    permissionName,
+                    PermissionConstants.PERMISSION_REQUEST_READ_EXTERNAL_STORAGE
+                )
         }
     }
 
