@@ -30,7 +30,7 @@
         android:layout_marginBottom="8dp">
 
         <Button
-            android:id="@+id/from_gallery_button"
+            android:id="@+id/gallery_button"
             style="@style/button.simple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -8,4 +8,14 @@ interface NewMemeView : MvpView {
     fun closeActivity()
 
     fun isCreateEnabled(isEnabled: Boolean)
+
+    fun hideMemeImage()
+
+    fun showMemeImage()
+
+    fun checkPermission(permissionName: String)
+
+    fun requestPermission(permissionName: String, permissionConstant: Int)
+
+    fun openCamera()
 }
