@@ -66,7 +66,7 @@ class ProfileFragment : MemeListFragment(), ProfileView {
         activity?.let {
             feedAdapter = FeedAdapter(it,
                 { memeEntity, bitmap, imageView ->
-                    presenter.memeChosen(memeEntity, bitmap, imageView)
+                    presenter.memeChosen(memeEntity, imageView)
                 }, { meme, position ->
                     presenter.favoriteButtonPressed(meme, position)
                 }, { memeEntity ->

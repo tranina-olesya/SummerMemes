@@ -20,7 +20,7 @@ interface MemeListView : MvpView {
 
     fun hideLoading()
 
-    fun openMemeDetailActivity(meme: MemeEntity, bitmap: Bitmap?, imageView: ImageView)
+    fun openMemeDetailActivity(meme: MemeEntity, imageView: ImageView)
 
     fun updateElement(meme: MemeEntity, position: Int)
 

@@ -84,7 +84,7 @@ class FeedFragment : MemeListFragment(), FeedView {
         activity?.let {
             feedAdapter = FeedAdapter(it,
                 { memeEntity, bitmap, imageView ->
-                    presenter.memeChosen(memeEntity, bitmap, imageView)
+                    presenter.memeChosen(memeEntity, imageView)
                 }, { meme, position ->
                     presenter.favoriteButtonPressed(meme, position)
                 }, { memeEntity ->
@@ -97,7 +97,6 @@ class FeedFragment : MemeListFragment(), FeedView {
                 )
             recycler_view.layoutManager = layoutManager
             recycler_view.adapter = feedAdapter
-            recycler_view.itemAnimator?.changeDuration = 0
         }
     }
 

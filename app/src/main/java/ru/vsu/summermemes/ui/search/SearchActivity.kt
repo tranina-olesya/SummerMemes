@@ -1,20 +1,25 @@
 package ru.vsu.summermemes.ui.search
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.fragment_feed.*
 import kotlinx.android.synthetic.main.toolbar_search_activity.*
+import ru.surfstudio.android.easyadapter.EasyAdapter
+import ru.surfstudio.android.easyadapter.ItemList
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
+import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
+import ru.vsu.summermemes.ui.search.controllers.MemeController
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -25,25 +30,60 @@ class SearchActivity : MvpAppCompatActivity(), SearchView {
 
     private var subscribtion: Disposable? = null
 
+    private val adapter = EasyAdapter()
+
+    private lateinit var memeController: MemeController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         initUI()
     }
 
-    fun initUI() {
+    override fun showMemesList(memes: List<MemeEntity>) {
+        val itemList = ItemList.create()
+            .addAll(memes, memeController)
+        adapter.setItems(itemList)
+    }
+
+    override fun hideMemesList() {
+    }
+
+    override fun showLoadingErrorOnTopOfContent(parentView: View) {
+    }
+
+    override fun showLoadingErrorOnTopOfContent() {
+    }
+
+    override fun showLoading() {
+    }
+
+    override fun hideLoading() {
+    }
+
+    override fun openMemeDetailActivity(meme: MemeEntity, imageView: ImageView) {
+    }
+
+    override fun updateElement(meme: MemeEntity, position: Int) {
+    }
+
+    override fun shareMeme(intent: Intent) {
+    }
+
+    private fun initUI() {
         setSupportActionBar(toolbar)
         configureClearButton()
         configureSearchView()
+        configureRecyclerView()
     }
 
-    fun configureClearButton() {
+    private fun configureClearButton() {
         toolbar_clear_button.setOnClickListener {
             meme_name_search_view.text.clear()
         }
     }
 
-    fun configureSearchView() {
+    private fun configureSearchView() {
         subscribtion = Observable
             .create(ObservableOnSubscribe<String> { subscriber ->
                 meme_name_search_view.addTextChangedListener(object :
@@ -51,6 +91,7 @@ class SearchActivity : MvpAppCompatActivity(), SearchView {
                     override fun afterTextChanged(s: Editable?) {
                         subscriber.onNext(s.toString())
                     }
+
                     override fun beforeTextChanged(
                         s: CharSequence?,
                         start: Int,
@@ -76,30 +117,24 @@ class SearchActivity : MvpAppCompatActivity(), SearchView {
             .subscribe { text -> presenter.searchMeme(text) }
     }
 
-    override fun showMemesList(memes: List<MemeEntity>) {
+    private fun configureRecyclerView() {
+        val layoutManager =
+            androidx.recyclerview.widget.StaggeredGridLayoutManager(
+                FeedFragment.COLUMNS_COUNT,
+                LinearLayoutManager.VERTICAL
+            )
+        recycler_view.layoutManager = layoutManager
+        recycler_view.adapter = adapter
+        configureMemeController()
     }
 
-    override fun hideMemesList() {
-    }
-
-    override fun showLoadingErrorOnTopOfContent(parentView: View) {
-    }
-
-    override fun showLoadingErrorOnTopOfContent() {
-    }
-
-    override fun showLoading() {
-    }
-
-    override fun hideLoading() {
-    }
-
-    override fun openMemeDetailActivity(meme: MemeEntity, bitmap: Bitmap?, imageView: ImageView) {
-    }
-
-    override fun updateElement(meme: MemeEntity, position: Int) {
-    }
-
-    override fun shareMeme(intent: Intent) {
+    private fun configureMemeController() {
+        memeController = MemeController({ memeEntity, imageView ->
+            presenter.memeChosen(memeEntity, imageView)
+        }, {
+//            presenter.favoriteButtonPressed(meme)
+        }, {
+            presenter.shareMeme(it)
+        })
     }
 }

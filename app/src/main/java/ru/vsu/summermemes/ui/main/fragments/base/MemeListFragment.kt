@@ -2,6 +2,7 @@ package ru.vsu.summermemes.ui.main.fragments.base
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.transition.Fade
 import android.view.View
 import android.widget.ImageView
@@ -35,7 +36,7 @@ abstract class MemeListFragment : MvpAppCompatFragment(), MemeListView {
         }
     }
 
-    override fun openMemeDetailActivity(meme: MemeEntity, bitmap: Bitmap?, imageView: ImageView) {
+    override fun openMemeDetailActivity(meme: MemeEntity,imageView: ImageView) {
         activity?.apply {
             val intent = Intent(this, MemeDetailActivity::class.java)
             intent.putExtra(MemeDetailActivity.MEME_EXTRA, meme)
@@ -48,7 +49,7 @@ abstract class MemeListFragment : MvpAppCompatFragment(), MemeListView {
                 ViewCompat.getTransitionName(imageView)!!
             )
 
-            TmpImageStorage.image = bitmap
+            TmpImageStorage.image = (imageView.drawable as BitmapDrawable).bitmap
             startActivity(intent, options.toBundle())
         }
     }

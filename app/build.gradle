@@ -9,6 +9,11 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 28
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     dataBinding {
         enabled = true
     }
@@ -85,4 +90,7 @@ dependencies {
     // Dagger
     implementation 'com.google.dagger:dagger:2.13'
     kapt 'com.google.dagger:dagger-compiler:2.13'
+
+    // EasyAdapter
+    implementation 'ru.surfstudio.android:easyadapter:1.0.0'
 }
