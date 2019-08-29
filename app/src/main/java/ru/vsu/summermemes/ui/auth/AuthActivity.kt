@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.telephony.PhoneNumberFormattingTextWatcher
 import com.google.android.material.snackbar.Snackbar
 import androidx.core.content.ContextCompat
 import android.text.Editable
@@ -23,6 +24,7 @@ class AuthActivity : MvpAppCompatActivity(), AuthView {
 
     companion object {
         const val MIN_PASSWORD_LENGTH = 6
+        const val PHONE_PREFIX = "+7 "
     }
 
     @InjectPresenter
@@ -53,6 +55,8 @@ class AuthActivity : MvpAppCompatActivity(), AuthView {
 
     private fun configureLoginTextFiledBoxes() {
         configureLoginKeyboard()
+        login_edit_text.setPrefix(PHONE_PREFIX)
+        login_edit_text.addTextChangedListener(PhoneNumberFormattingTextWatcher("US"))
     }
 
     private fun configurePasswordValidation() {
@@ -94,7 +98,7 @@ class AuthActivity : MvpAppCompatActivity(), AuthView {
 
     private fun configureLoginButton() {
         auth_button.setOnClickListener {
-            val login = login_edit_text.text.toString()
+            val login = PHONE_PREFIX + login_edit_text.text.toString()
             val password = password_edit_text.text.toString()
             presenter.loginButtonClicked(
                 AuthRequestEntity(
@@ -106,6 +110,10 @@ class AuthActivity : MvpAppCompatActivity(), AuthView {
     }
 
     override fun showErrorForEmptyLogin() {
+        login_text_field_boxes.setError(getString(R.string.field_empty_error), false)
+    }
+
+    override fun showErrorForNotFormattedLogin() {
         login_text_field_boxes.setError(getString(R.string.field_empty_error), false)
     }
 

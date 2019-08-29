@@ -22,6 +22,8 @@
 
         <studio.carbonylgroup.textfieldboxes.ExtendedEditText
             android:id="@+id/login_edit_text"
+            app:prefixTextColor="@color/white"
+            android:maxLength="14"
             style="@style/extended_edit_text"
             android:inputType="phone" />
 
