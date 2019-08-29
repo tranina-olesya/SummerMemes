@@ -14,7 +14,6 @@ import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.ActivityMemeDetailBinding
 import ru.vsu.summermemes.utils.image.GlideImageLoader
 import ru.vsu.summermemes.utils.image.TmpImageStorage
-import ru.vsu.summermemes.utils.ui.MemeShareHelper
 
 class MemeDetailActivity : MvpAppCompatActivity(), MemeDetailView {
 
@@ -61,6 +60,17 @@ class MemeDetailActivity : MvpAppCompatActivity(), MemeDetailView {
         startActivity(intent)
     }
 
+    override fun closeActivity() {
+        onBackPressed()
+    }
+
+    override fun updateButtonImage(isFavorite: Boolean) {
+        if (isFavorite)
+            favorite_button.setImageResource(R.drawable.ic_favorite)
+        else
+            favorite_button.setImageResource(R.drawable.ic_favorite_empty)
+    }
+
     private fun loadValuesFromIntent() {
         presenter.imageBitmap = TmpImageStorage.image
         TmpImageStorage.image = null
@@ -71,6 +81,7 @@ class MemeDetailActivity : MvpAppCompatActivity(), MemeDetailView {
     private fun initUI() {
         configureCloseButton()
         configureShareButton()
+        configureFavoriteButton()
     }
 
     private fun configureCloseButton() {
@@ -82,6 +93,12 @@ class MemeDetailActivity : MvpAppCompatActivity(), MemeDetailView {
     private fun configureShareButton() {
         toolbar_share_button.setOnClickListener {
             presenter.shareMeme()
+        }
+    }
+
+    private fun configureFavoriteButton() {
+        favorite_button.setOnClickListener {
+            presenter.favoriteButtonClicked()
         }
     }
 }

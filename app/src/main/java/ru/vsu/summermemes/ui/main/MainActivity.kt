@@ -68,6 +68,7 @@ class MainActivity : MemeListActivity(), MainView {
 
     override fun openAuthScreen() {
         val intent = Intent(this, AuthActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         onBackPressed()
         finish()
