@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height"
-    android:id="@+id/toolbar"
     android:background="@color/background_2">
 
     <LinearLayout
@@ -18,10 +18,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
+            android:background="@color/clear"
             android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
+            android:hint="@string/search_hint"
             android:maxLines="1"
             android:textColor="@color/white"
+            android:textColorHint="@color/edit_text_hint"
             android:textSize="20sp" />
 
         <ImageButton
@@ -29,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:background="?android:selectableItemBackgroundBorderless"
             android:src="@drawable/ic_close" />
 

@@ -52,6 +52,7 @@ class FeedPresenter : MemeListPresenter<FeedView>() {
                 return@map it.convertToMemeEntities()
             }
             .doOnNext {
+                results = it.toMutableList()
                 cacheMemes(it)
             }
             .subscribe(

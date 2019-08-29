@@ -5,25 +5,27 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.fragment_feed.*
+import kotlinx.android.synthetic.main.fragment_feed.recycler_view
 import kotlinx.android.synthetic.main.toolbar_search_activity.*
+import kotlinx.android.synthetic.main.toolbar_search_activity.toolbar
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.surfstudio.android.easyadapter.ItemList
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
+import ru.vsu.summermemes.ui.main.fragments.base.activity.MemeListActivity
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 import ru.vsu.summermemes.ui.search.controllers.MemeController
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class SearchActivity : MvpAppCompatActivity(), SearchView {
+class SearchActivity : MemeListActivity(), SearchView {
 
     @InjectPresenter
     lateinit var presenter: SearchPresenter
@@ -40,41 +42,57 @@ class SearchActivity : MvpAppCompatActivity(), SearchView {
         initUI()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     override fun showMemesList(memes: List<MemeEntity>) {
+        recycler_view.visibility = View.VISIBLE
         val itemList = ItemList.create()
             .addAll(memes, memeController)
         adapter.setItems(itemList)
     }
 
     override fun hideMemesList() {
+        recycler_view.visibility = View.GONE
     }
 
-    override fun showLoadingErrorOnTopOfContent(parentView: View) {
+    override fun showNothingFoundMessage() {
+        nothing_found_text_view.visibility = View.VISIBLE
     }
 
-    override fun showLoadingErrorOnTopOfContent() {
+    override fun hideNothingFoundMessage() {
+        nothing_found_text_view.visibility = View.GONE
     }
 
-    override fun showLoading() {
-    }
+    override fun showLoadingErrorOnTopOfContent(parentView: View) {}
 
-    override fun hideLoading() {
-    }
+    override fun showLoadingErrorOnTopOfContent() {}
 
-    override fun openMemeDetailActivity(meme: MemeEntity, imageView: ImageView) {
-    }
+    override fun showLoading() {}
 
-    override fun updateElement(meme: MemeEntity, position: Int) {
-    }
+    override fun hideLoading() {}
+
+    override fun updateElement(meme: MemeEntity, position: Int) {}
 
     override fun shareMeme(intent: Intent) {
+        startActivity(intent)
     }
 
     private fun initUI() {
-        setSupportActionBar(toolbar)
+        configureToolbar()
         configureClearButton()
         configureSearchView()
         configureRecyclerView()
+        hideNothingFoundMessage()
+        hideMemesList()
+    }
+
+    private fun configureToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     private fun configureClearButton() {
@@ -131,8 +149,8 @@ class SearchActivity : MvpAppCompatActivity(), SearchView {
     private fun configureMemeController() {
         memeController = MemeController({ memeEntity, imageView ->
             presenter.memeChosen(memeEntity, imageView)
-        }, {
-//            presenter.favoriteButtonPressed(meme)
+        }, { memeEntity ->
+            presenter.favoriteButtonPressed(memeEntity, null)
         }, {
             presenter.shareMeme(it)
         })

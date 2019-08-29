@@ -6,8 +6,6 @@ import ru.vsu.summermemes.di.module.DBModule
 import ru.vsu.summermemes.di.module.NetworkModule
 import ru.vsu.summermemes.ui.auth.AuthPresenter
 import ru.vsu.summermemes.ui.main.MainPresenter
-import ru.vsu.summermemes.ui.main.fragments.base.MemeListPresenter
-import ru.vsu.summermemes.ui.main.fragments.base.MemeListView
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedPresenter
 import ru.vsu.summermemes.ui.main.fragments.profile.ProfilePresenter
 import ru.vsu.summermemes.ui.memedetail.MemeDetailPresenter

@@ -23,4 +23,26 @@ class MemeEntity : Serializable {
 
     @Embedded
     lateinit var meme: MemeInfo
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MemeEntity
+
+        if (id != other.id) return false
+        if (isLocal != other.isLocal) return false
+        if (imagePath != other.imagePath) return false
+        if (meme != other.meme) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id?.hashCode() ?: 0
+        result = 31 * result + isLocal.hashCode()
+        result = 31 * result + (imagePath?.hashCode() ?: 0)
+        result = 31 * result + meme.hashCode()
+        return result
+    }
 }

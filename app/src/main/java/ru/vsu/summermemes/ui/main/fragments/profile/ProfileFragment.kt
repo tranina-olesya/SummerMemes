@@ -16,7 +16,7 @@ import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.FragmentProfileBinding
 import ru.vsu.summermemes.models.auth.UserInfo
 import ru.vsu.summermemes.ui.main.fragments.base.FeedAdapter
-import ru.vsu.summermemes.ui.main.fragments.base.MemeListFragment
+import ru.vsu.summermemes.ui.main.fragments.base.fragment.MemeListFragment
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 
 class ProfileFragment : MemeListFragment(), ProfileView {

@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_feed.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.ui.main.fragments.base.FeedAdapter
-import ru.vsu.summermemes.ui.main.fragments.base.MemeListFragment
+import ru.vsu.summermemes.ui.main.fragments.base.fragment.MemeListFragment
 
 class FeedFragment : MemeListFragment(), FeedView {
 

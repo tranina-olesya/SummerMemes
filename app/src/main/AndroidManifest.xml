@@ -21,7 +21,8 @@
             android:theme="@style/AppTheme.Toolbar" />
         <activity
             android:name=".ui.search.SearchActivity"
-            android:theme="@style/AppTheme.Toolbar" />
+            android:theme="@style/AppTheme.ToolBar.ActiveColor"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".ui.memedetail.MemeDetailActivity"
             android:theme="@style/AppTheme.Toolbar" />
