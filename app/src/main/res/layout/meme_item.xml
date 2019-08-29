@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
@@ -32,8 +32,6 @@
                 <ImageView
                     android:transitionName="meme_transition"
                     android:id="@+id/meme_image"
-                    uri="@{ memeEntity.imagePath }"
-                    url="@{ memeEntity.meme.photoUrl }"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"

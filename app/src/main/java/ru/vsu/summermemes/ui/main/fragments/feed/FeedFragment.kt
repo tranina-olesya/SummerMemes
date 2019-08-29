@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_feed.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.ui.main.fragments.base.FeedAdapter
-import ru.vsu.summermemes.ui.main.fragments.base.MemeListFragment
+import ru.vsu.summermemes.ui.main.fragments.base.fragment.MemeListFragment
 
 class FeedFragment : MemeListFragment(), FeedView {
 
@@ -84,7 +84,7 @@ class FeedFragment : MemeListFragment(), FeedView {
         activity?.let {
             feedAdapter = FeedAdapter(it,
                 { memeEntity, bitmap, imageView ->
-                    presenter.memeChosen(memeEntity, bitmap, imageView)
+                    presenter.memeChosen(memeEntity, imageView)
                 }, { meme, position ->
                     presenter.favoriteButtonPressed(meme, position)
                 }, { memeEntity ->
@@ -97,7 +97,6 @@ class FeedFragment : MemeListFragment(), FeedView {
                 )
             recycler_view.layoutManager = layoutManager
             recycler_view.adapter = feedAdapter
-            recycler_view.itemAnimator?.changeDuration = 0
         }
     }
 

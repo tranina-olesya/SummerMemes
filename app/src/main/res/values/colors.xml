@@ -22,4 +22,5 @@
     <color name="profile_user_description">#99FFFFFF</color>
     <color name="close_image_background">#CC000000</color>
     <color name="active_disabled">#4D1EF0D7</color>
+    <color name="profile_separator">#312F51</color>
 </resources>

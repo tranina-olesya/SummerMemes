@@ -7,17 +7,18 @@ import android.view.ContextThemeWrapper
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main_activity.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.ui.auth.AuthActivity
+import ru.vsu.summermemes.ui.main.fragments.base.activity.MemeListActivity
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 import ru.vsu.summermemes.ui.main.fragments.profile.ProfileFragment
 import ru.vsu.summermemes.ui.newmeme.NewMemeActivity
+import ru.vsu.summermemes.ui.search.SearchActivity
 
-class MainActivity : MvpAppCompatActivity(), MainView {
+class MainActivity : MemeListActivity(), MainView {
 
     companion object {
         const val FEED_TAG = "FEED"
@@ -43,12 +44,17 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(findViewById(R.id.toolbar_main))
+        setSupportActionBar(toolbar_main)
         setContentView(R.layout.activity_main)
+        initUI()
+    }
+
+    private fun initUI() {
         configureFragmentManager()
         configureFragmentNavigation()
         configureLogoutDialog()
         configureToolBar()
+        configureSearchButton()
     }
 
     private fun configureToolBar() {
@@ -139,5 +145,12 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
 
         dialog = builder.create()
+    }
+
+    private fun configureSearchButton() {
+        toolbar_search_button.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

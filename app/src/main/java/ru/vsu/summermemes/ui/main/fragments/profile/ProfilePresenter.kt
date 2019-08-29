@@ -36,25 +36,28 @@ class ProfilePresenter : MemeListPresenter<ProfileView>() {
         viewState.showLoading()
     }
 
-    override fun favoriteButtonPressed(meme: MemeEntity, position: Int) {
+    override fun favoriteButtonPressed(meme: MemeEntity, position: Int?) {
+        results ?: return
         subscription = localMemeRepository
             .delete(meme)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe {
+                position ?: return@subscribe
                 viewState.notifyMemeDeleted(position)
             }
     }
 
     private fun loadMemes() {
         subscription = localMemeRepository
-            .getAll()
+            .getAllLocal()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .doAfterTerminate {
                 viewState.hideLoading()
             }
             .subscribe({
+                results = it.toMutableList()
                 viewState.showMemesList(it)
             }, {
                 viewState.showLoadingErrorOnTopOfContent()

@@ -7,7 +7,7 @@ import ru.vsu.summermemes.utils.image.GlideImageLoader
 object ImageBindingAdapter {
 
     @JvmStatic
-    @BindingAdapter("url")
+    @BindingAdapter("bind:url")
     fun getImageFromUrl(view: ImageView, url: String?) {
         url?.let {
             GlideImageLoader.loadImage(url, view)
@@ -15,7 +15,7 @@ object ImageBindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("uri")
+    @BindingAdapter("bind:uri")
     fun getImageFromUri(view: ImageView, uri: String?) {
         uri?.let {
             GlideImageLoader.loadImageFromFiles(uri, view)

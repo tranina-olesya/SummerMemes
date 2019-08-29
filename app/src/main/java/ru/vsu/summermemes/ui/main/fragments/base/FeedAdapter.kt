@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.meme_item.view.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.data.db.entities.MemeEntity
 import ru.vsu.summermemes.databinding.MemeItemBinding
+import ru.vsu.summermemes.utils.image.GlideImageLoader
 
 class FeedAdapter(
     context: Context,
@@ -69,6 +70,11 @@ class FeedAdapter(
             binding.shareButton.setOnClickListener {
                 onShareClickListener.invoke(memeEntity)
             }
+
+            if (memeEntity.isLocal && memeEntity.imagePath != null)
+                GlideImageLoader.loadImageFromFiles(memeEntity.imagePath!!, binding.root.meme_image)
+            else if(memeEntity.meme.photoUrl != null)
+                GlideImageLoader.loadImage(memeEntity.meme.photoUrl!!, binding.root.meme_image)
         }
     }
 }
