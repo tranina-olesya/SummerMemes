@@ -17,4 +17,8 @@ interface MemeDetailView : MvpView {
     fun loadImageFromFiles(uri: String)
 
     fun shareMeme(intent: Intent)
+
+    fun closeActivity()
+
+    fun updateButtonImage(isFavorite: Boolean)
 }

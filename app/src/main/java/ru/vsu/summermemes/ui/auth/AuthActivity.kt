@@ -5,16 +5,16 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.content.ContextCompat
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_auth.*
 import ru.vsu.summermemes.R
 import ru.vsu.summermemes.models.auth.AuthRequestEntity
@@ -98,8 +98,8 @@ class AuthActivity : MvpAppCompatActivity(), AuthView {
 
     private fun configureLoginButton() {
         auth_button.setOnClickListener {
-            val login = PHONE_PREFIX + login_edit_text.text.toString()
-            val password = password_edit_text.text.toString()
+            val login = PHONE_PREFIX + login_edit_text.text.toString().trim()
+            val password = password_edit_text.text.toString().trim()
             presenter.loginButtonClicked(
                 AuthRequestEntity(
                     login,
