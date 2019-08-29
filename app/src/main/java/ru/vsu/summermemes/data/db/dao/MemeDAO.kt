@@ -24,4 +24,7 @@ interface MemeDAO {
 
     @Delete
     fun delete(memeEntity: MemeEntity): Completable
+
+    @Query("select * from memes where title like '%' || :title || '%'")
+    fun findMeme(title: String): Single<List<MemeEntity>>
 }

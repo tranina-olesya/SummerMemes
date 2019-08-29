@@ -15,6 +15,7 @@ import ru.vsu.summermemes.ui.main.fragments.feed.FeedPresenter
 import ru.vsu.summermemes.ui.main.fragments.profile.ProfilePresenter
 import ru.vsu.summermemes.ui.memedetail.MemeDetailPresenter
 import ru.vsu.summermemes.ui.newmeme.NewMemePresenter
+import ru.vsu.summermemes.ui.search.SearchPresenter
 
 open class BasePresenter<V : MvpView>: MvpPresenter<V>() {
 
@@ -37,6 +38,7 @@ open class BasePresenter<V : MvpView>: MvpPresenter<V>() {
             is ProfilePresenter -> injector.inject(this)
             is NewMemePresenter -> injector.inject(this)
             is MemeDetailPresenter -> injector.inject(this)
+            is SearchPresenter -> injector.inject(this)
         }
     }
 

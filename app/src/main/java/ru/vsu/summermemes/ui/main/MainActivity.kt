@@ -16,6 +16,7 @@ import ru.vsu.summermemes.ui.auth.AuthActivity
 import ru.vsu.summermemes.ui.main.fragments.feed.FeedFragment
 import ru.vsu.summermemes.ui.main.fragments.profile.ProfileFragment
 import ru.vsu.summermemes.ui.newmeme.NewMemeActivity
+import ru.vsu.summermemes.ui.search.SearchActivity
 
 class MainActivity : MvpAppCompatActivity(), MainView {
 
@@ -43,12 +44,17 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(findViewById(R.id.toolbar_main))
+        setSupportActionBar(toolbar_main)
         setContentView(R.layout.activity_main)
+        initUI()
+    }
+
+    private fun initUI() {
         configureFragmentManager()
         configureFragmentNavigation()
         configureLogoutDialog()
         configureToolBar()
+        configureSearchButton()
     }
 
     private fun configureToolBar() {
@@ -143,7 +149,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     private fun configureSearchButton() {
         toolbar_search_button.setOnClickListener {
-
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
         }
     }
 }

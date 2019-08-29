@@ -27,4 +27,8 @@ class LocalMemeRepository @Inject constructor(val memeDAO: MemeDAO) {
     fun insertAll(memeEntities: List<MemeEntity>): Completable {
         return memeDAO.insertAll(memeEntities)
     }
+
+    fun findMeme(title: String): Single<List<MemeEntity>> {
+        return memeDAO.findMeme(title)
+    }
 }
