@@ -18,4 +18,6 @@ interface AuthView : MvpView {
     fun showPassword()
 
     fun hidePassword()
+
+    fun showErrorForNotFormattedLogin()
 }

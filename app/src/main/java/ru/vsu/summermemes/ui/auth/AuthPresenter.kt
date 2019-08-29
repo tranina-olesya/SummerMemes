@@ -1,5 +1,6 @@
 package ru.vsu.summermemes.ui.auth
 
+import android.telephony.PhoneNumberUtils
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -46,7 +47,6 @@ class AuthPresenter : BasePresenter<AuthView>() {
     private fun validateFields(authRequestEntity: AuthRequestEntity): Boolean {
         val login = authRequestEntity.login
         val password = authRequestEntity.password
-
         if (login.isNotEmpty() && password.isNotEmpty() && password.length >= AuthActivity.MIN_PASSWORD_LENGTH)
             return true
 
@@ -70,8 +70,7 @@ class AuthPresenter : BasePresenter<AuthView>() {
             .subscribe(
                 { authResponse ->
                     viewState.openMainActivity()
-                },
-                {
+                }, {
                     viewState.showAuthError()
                 }
             )
